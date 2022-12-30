@@ -12,9 +12,12 @@ const Authenticate = () => {
     const Page = steps[step]
     const onNext = () => {
         setStep(step + 1)
+        
     }
     return (
-        <div><Page onNext={onNext} /></div>
+        <div>
+           
+            <Page onNext={onNext} /></div>
     )
 }
 

@@ -1,16 +1,16 @@
 .button {
     background: #EA3C12;
-    padding: 10px 20px;
+    padding: 10px 35px;
     border: none;
     outline: none;
     display: flex;
     align-items: center;
-    color: #ffff;
-    font-size: 12px;
-    font-weight: bold;
+    margin: 0 auto;
+    color: #fff;
+    font-size: 18px;
     border-radius: 50px;
     cursor: pointer;
-    transition: all .3s ease-out;
+    transition: all 0.3s ease-in-out;
 }
 
 .button:hover{
