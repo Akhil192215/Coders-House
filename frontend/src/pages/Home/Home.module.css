@@ -1,0 +1,33 @@
+.card {
+    width: 500px;
+    max-width: 90%;
+    min-height: 300px;
+    background: #1D1D1D;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px;
+}
+
+.headingWrapper {
+    width: 150px;
+    margin-bottom: 30px;
+}
+
+.cardWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signinWrapper{
+    margin-top: 5px;
+}
+.invite{
+    color: #EA3C12;
+    font-size: 13px;
+}
