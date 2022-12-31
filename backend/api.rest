@@ -2,5 +2,14 @@ POST http://localhost:4000/api/send-otp
 Content-Type: application/json
 
 {
-   "phone":"94547857845"
+   "phone":"+917907324258"
+}
+
+###
+POST http://localhost:4000/api/verify-otp 
+Content-Type: application/json
+{
+     "phone":"+917907324258",
+     "otp":,
+   "hash": "0aaf0351caddbadb6fd3e427887e5896d5dc7eb7b5c1f80685ac8580741c5090.1672502772551",
 }
