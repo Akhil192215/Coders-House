@@ -8,8 +8,28 @@ Content-Type: application/json
 ###
 POST http://localhost:4000/api/verify-otp 
 Content-Type: application/json
+
 {
-     "phone":"+917907324258",
-     "otp":,
-   "hash": "0aaf0351caddbadb6fd3e427887e5896d5dc7eb7b5c1f80685ac8580741c5090.1672502772551",
+    "phone":"+917907324258",
+     "otp":6705,
+     "hash":"01811a4bf71695b76f2c4720c0061598d116b260c572b20f3e283c0c1f2d352a.1672580308783"
+}
+
+###
+POST http://localhost:4000/test 
+Content-Type: application/json
+
+{
+   "phone":"+917907324258",
+   "data2":9766,
+   "data3":"fa286b40c15986698962ea9ed8179cd8c096b7191f3ba23a8951cf0d424d8aa9.1672579207876"
+   
+}
+
+###
+POST http://localhost:4000/new
+Content-Type: application/json
+
+{
+    "new1" : "this is new route api"
 }
