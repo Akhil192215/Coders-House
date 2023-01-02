@@ -9,11 +9,12 @@ import { useDispatch } from "react-redux";
 import { setOtp } from "../../../../store/authSlice";
 
 const Phone = ({ onNext }) => {
-  
   const dispatch = useDispatch();
   const [phoneNumber, setPhoneNumber] = useState("");
   async function submit() {
+    console.log("function invoked");
     const { data } = await sendOtp({ phone: phoneNumber });
+    console.log("hiiiiiiiiiiiiiiiiiii");
     console.log(data);
     dispatch(setOtp({ phone: data.phone, hash: data.hash }));
     onNext();

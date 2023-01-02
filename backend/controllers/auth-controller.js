@@ -6,6 +6,7 @@ const UserDto = require("../dtos/user-dto");
 class AuthController {
   async sendOtp(req, res) {
     //Logic
+    console.log('api called');
     const { phone } = req.body;
     console.log(phone);
     if (!phone) {
