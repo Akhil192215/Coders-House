@@ -1,15 +1,13 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-let auth = false;
-let user = {
-  activate: false,
-};
+import { useSelector } from "react-redux";
 
 const ProtectedRoutes = () => {
-  return !auth ? (
+  const { isAuth, user } = useSelector((state) => state.auth);
+  return !isAuth ? (
     <Navigate to="/" />
-  ) : auth && !user.activate ? (
-    <Navigate to="/new" />
+  ) : isAuth && !user.activate ? (
+    <Navigate to="/activate" />
   ) : (
     <Outlet />
   );

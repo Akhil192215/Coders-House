@@ -2,6 +2,7 @@ const otpService = require("../services/otp-service");
 const hashService = require("../services/hash-service");
 const userService = require("../services/user-service");
 const tokenService = require("../services/token-service");
+const UserDto = require("../dtos/user-dto");
 class AuthController {
   async sendOtp(req, res) {
     //Logic
@@ -10,7 +11,7 @@ class AuthController {
     if (!phone) {
       res.status(400).json({ message: "phone number is required" });
     }
-    //generate OTP
+    // generate OTP
     const otp = await otpService.generateOtp();
     //hash OTP
     const ttl = 1000 * 60 * 3; //2min
@@ -20,10 +21,11 @@ class AuthController {
     //send OTP
 
     try {
-      await otpService.sendBySms(phone, otp);
+      // await otpService.sendBySms(phone, otp);
       res.json({
         hash: `${hash}.${expiry}`,
         phone,
+        otp,
       });
     } catch (err) {
       console.log(err);
@@ -31,7 +33,7 @@ class AuthController {
     }
   }
 
-  verifyOtp(req, res) {
+  async verifyOtp(req, res) {
     //Logic
     console.log(req.body);
     const { otp, hash, phone } = req.body;
@@ -50,9 +52,9 @@ class AuthController {
     let user;
 
     try {
-      user = userService.findUser({ phone });
+      user = await userService.findUser({ phone });
       if (!user) {
-        user = userService.createUser({ phone });
+        user = await userService.createUser({ phone });
       }
     } catch (err) {
       console.log(err);
@@ -63,12 +65,17 @@ class AuthController {
     const { accessToken, refreshToken } = tokenService.generateTokens({
       _id: user._id,
     });
+    await tokenService.storeRefreshToken(refreshToken, user._id);
     res.cookie("refreshtoken", refreshToken, {
       maxAge: 1000 * 60 * 60 * 24 * 30,
       httpOnly: true,
     });
-
-    res.json({ accessToken });
+    res.cookie("accessToken", accessToken, {
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      httpOnly: true,
+    });
+    const userDto = new UserDto(user);
+    res.json({ user: userDto, auth: true });
   }
 
   apiTest(req, res) {

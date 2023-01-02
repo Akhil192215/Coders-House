@@ -1,14 +1,12 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const SemiProtected = () => {
-  let auth = false;
-  let user = {
-    activate: false,
-  };
-  return !auth ? (
+  const { isAuth, user } = useSelector((state) => state.auth);
+  return !isAuth ? (
     <Navigate to="/" />
-  ) : auth && !user.activate ? (
+  ) : isAuth && !user.activate ? (
     <Outlet />
   ) : (
     <Navigate to="/rooms" />

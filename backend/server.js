@@ -3,9 +3,15 @@ const express = require("express");
 const router = require('./routes')
 const app = express();
 const dbConnect = require('./database')
+const cors = require('cors')
 app.use(express.json())
-dbConnect()
+dbConnect()   
+const corsOption = {
+  credentials:true,
+  origin:["http://localhost:3000"],
 
+}
+app.use(cors(corsOption))
 
 
 app.get("/", (req, res) => {
