@@ -27,7 +27,7 @@ function App() {
           <Route element={<Activate />} path="/activate" />
         </Route>
         <Route element={<ProtectedRoutes />}>
-          <Route element={<Room />} path="/room" />
+          <Route element={<Room />} path="/rooms" />
         </Route>
       </Routes>
     </BrowserRouter>

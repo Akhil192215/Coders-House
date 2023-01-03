@@ -2,7 +2,7 @@ import React from 'react'
 
 function Room() {
   return (
-    <div>Room</div>
+    <div className='cardWrapper'><h1>Home Page</h1></div>
   )
 }
 

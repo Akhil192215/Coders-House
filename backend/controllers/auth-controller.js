@@ -7,7 +7,8 @@ class AuthController {
   async sendOtp(req, res) {
     //Logic
     console.log('api called');
-    const { phone } = req.body;
+    let { phone } = req.body;
+    phone = `+91${phone}`
     console.log(phone);
     if (!phone) {
       res.status(400).json({ message: "phone number is required" });

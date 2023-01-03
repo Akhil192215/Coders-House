@@ -6,9 +6,10 @@ const dbConnect = require("./database");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
-app.use(express.json({ strict: false }));
+app.use(express.json({ strict: false, limit: "8mb" }));
 app.use(express.urlencoded());
 app.use(cookieParser());
+app.use("/storage", express.static("storage"));
 dbConnect();
 const corsOption = {
   credentials: true,

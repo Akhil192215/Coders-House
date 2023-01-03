@@ -6,7 +6,7 @@ const ProtectedRoutes = () => {
   const { isAuth, user } = useSelector((state) => state.auth);
   return !isAuth ? (
     <Navigate to="/" />
-  ) : isAuth && !user.activate ? (
+  ) : isAuth && !user.activated ? (
     <Navigate to="/activate" />
   ) : (
     <Outlet />

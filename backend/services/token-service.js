@@ -15,6 +15,9 @@ class TokenService {
   async storeRefreshToken(token, userId) {
     await refreshModel.create({token,userId})
   }
+  async verifyAccessToken(token){
+    return jwt.verify(token , accessTokenSecret)
+  }
 }
 
 module.exports = new TokenService();

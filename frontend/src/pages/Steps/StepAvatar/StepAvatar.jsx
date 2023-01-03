@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setAvatar } from "../../../store/activateSlice";
 import { activate } from "../../../http/index";
+import {setAuth} from "../../../store/authSlice"
 
 const StepAvatar = ({ onNext }) => {
   const dispatch = useDispatch();
@@ -17,14 +18,15 @@ const StepAvatar = ({ onNext }) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = function () {
-      console.log(reader.result);
+      // console.log(reader.result);
       setProfile(reader.result);
       dispatch(setAvatar(reader.result));
     };
   }
   async function submit() {
     try {
-      const { data } = activate(name, avatar);
+      const { data } = await activate({name:name, avatar:avatar});
+      dispatch(setAuth(data))
       console.log(data);
     } catch (err) {
       console.log(err);

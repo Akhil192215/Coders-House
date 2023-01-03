@@ -1,5 +1,4 @@
 POST http://localhost:4000/api/send-otp 
-
 Content-Type: application/json
 
 {
