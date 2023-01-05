@@ -8,6 +8,7 @@ import SemiProtected from "./pages/SemiProtected/SemiProtected";
 import Activate from "./pages/Activate/Activate";
 import ProtectedRoutes from "./pages/ProtectedRoutes/ProtectedRoutes";
 import Room from "./pages/Room/Room";
+import { useLoadingWithrefresh } from "./hooks/useLoadingWithRefresh";
 
 // let auth = true
 // let user = {
@@ -15,7 +16,10 @@ import Room from "./pages/Room/Room";
 // }
 
 function App() {
-  return (
+  const { Loading } = useLoadingWithrefresh();
+  return Loading ? (
+    "Loading..."
+  ) : (
     <BrowserRouter>
       <Navigation />
       <Routes>

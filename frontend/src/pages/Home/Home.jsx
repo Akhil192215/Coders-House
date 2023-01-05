@@ -26,7 +26,7 @@ function Home() {
           <Button onClick={startRegister} text={"Let's Go"} />
         </div>
         <div className={styles.signinWrapper}>
-          <span className={styles.invite}>Have an invite text? </span>
+          {/* <span className={styles.invite}>Have an invite text? </span> */}
         </div>
       </div>
     </div>

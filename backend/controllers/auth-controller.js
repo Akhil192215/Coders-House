@@ -6,10 +6,8 @@ const UserDto = require("../dtos/user-dto");
 class AuthController {
   async sendOtp(req, res) {
     //Logic
-    console.log('api called');
     let { phone } = req.body;
-    phone = `+91${phone}`
-    console.log(phone);
+    phone = `+91${phone}`;
     if (!phone) {
       res.status(400).json({ message: "phone number is required" });
     }
@@ -37,7 +35,6 @@ class AuthController {
 
   async verifyOtp(req, res) {
     //Logic
-    console.log(req.body);
     const { otp, hash, phone } = req.body;
     if (!otp || !hash || !phone) {
       res.status(400).json({ message: "some error occured" });
@@ -47,10 +44,16 @@ class AuthController {
       res.status(400).json({ message: "otp is expired" });
     }
     const data = `${phone}.${otp}.${expiry}`;
-    const isValid = otpService.verifyOtpService(hashedOtp, data);
-    if (!isValid) {
+
+    try {
+      const isValid = otpService.verifyOtpService(hashedOtp, data);
+      if (!isValid) {
+        throw new Error();
+      }
+    } catch (err) {
       res.status(400).json({ message: "OTP is invalid" });
     }
+
     let user;
 
     try {
@@ -79,23 +82,63 @@ class AuthController {
     const userDto = new UserDto(user);
     res.json({ user: userDto, auth: true });
   }
-
-  apiTest(req, res) {
-    console.log(req.body);
-    const { data } = req.body;
-    if (data) {
-      res.send("hiiiiiiiiiiiii");
+  async refresh(req, res) {
+    //Get refresh token from cookie
+    console.log(req.cookies);
+    const { refreshtoken: refreshTokenFromCookie } = req.cookies;
+    //Check if token is valid
+    let userData;
+    try {
+      userData = await tokenService.verifyRefreshToken(refreshTokenFromCookie);
+    } catch (err) {
+      console.log(err);
+      res.status(401).json({ message: "Invalid token" });
     }
-    res.status("biiiiiiiiiiiiiiiiii");
-  }
-  newApi(req, res) {
-    const { new1 } = req.body;
-    console.log(new1);
-    if (!new1) {
-      res.send("data not recived");
+    //check if token is in db
+    try {
+      const token = await tokenService.findRefreshToken(
+        userData._id,
+        refreshTokenFromCookie
+      );
+      if (!token) {
+        res.status(401).json({ message: "invalid token" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Internal Error" });
     }
-    res.send("data recived");
+    // check if valid user
+    let user;
+    try {
+       user = await userService.findUser({ _id: userData._id });
+      if (!user) {
+        res.status(404).json({ message: "user is not found" });
+      }
+    } catch (err) {
+      res.status(500).json({ message: "Internal Error" });
+    }
+    //Generate new tokens
+    const { refreshToken, accessToken } = tokenService.generateTokens({
+      _id: userData._id,
+    });
+    //Update token in db
+    try {
+      await tokenService.updateRfreshToken(userData._id, refreshToken);
+    } catch (error) {
+      res.status(500).json({ message: "Internal Error" });
+    }
+    //Put token in cookie
+    await tokenService.storeRefreshToken(refreshToken, user._id);
+    res.cookie("refreshtoken", refreshToken, {
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      httpOnly: true,
+    });
+    res.cookie("accessToken", accessToken, {
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      httpOnly: true,
+    });
+    //Send response
+    const userDto = new UserDto(user);
+    res.json({ user: userDto, auth: true });
   }
 }
-
 module.exports = new AuthController();
