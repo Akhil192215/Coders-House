@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const refreshModel = require("../models/refresh-model");
 const accessTokenSecret = process.env.JWT_ACCESS_TOKEN_SECRET;
 const refreshTokenSecret = process.env.JWT_REFRESH_TOKEN_SECRET;
 const RefreshModel = require("../models/refresh-model");
@@ -26,6 +27,9 @@ class TokenService {
   }
   async updateRfreshToken(id, token) {
     await RefreshModel.updateOne({ userId: id, token: token });
+  }
+  async removeRefreshToken(token){
+   await refreshModel.deleteOne({token:token})
   }
 }
 

@@ -30,9 +30,18 @@
  }
 
  body {
-    background: #121212;
+   background-color: #000;
+   
      font-family: 'Nunito', sans-serif;
      color: #ffff;
+   
+      background-image:    linear-gradient(
+        rgba(1, 0, 0, 0.907), 
+        rgba(0, 0, 0, 0.908)
+      ), url(https://learn.vscode.one/img/color-bars.svg);
+     
+      
+    
  }
 
  .container{

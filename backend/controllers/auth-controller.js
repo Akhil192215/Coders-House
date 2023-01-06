@@ -41,7 +41,7 @@ class AuthController {
     }
     const [hashedOtp, expiry] = hash.split(".");
     if (Date.now() > expiry) {
-      res.status(400).json({ message: "otp is expired" });
+    return  res.status(400).json({ message: "otp is expired" });
     }
     const data = `${phone}.${otp}.${expiry}`;
 
@@ -51,7 +51,7 @@ class AuthController {
         throw new Error();
       }
     } catch (err) {
-      res.status(400).json({ message: "OTP is invalid" });
+     return res.status(400).json({ message: "OTP is invalid" });
     }
 
     let user;
@@ -71,7 +71,7 @@ class AuthController {
       _id: user._id,
     });
     await tokenService.storeRefreshToken(refreshToken, user._id);
-    res.cookie("refreshtoken", refreshToken, {
+    res.cookie("refreshToken", refreshToken, {
       maxAge: 1000 * 60 * 60 * 24 * 30,
       httpOnly: true,
     });
@@ -84,16 +84,15 @@ class AuthController {
   }
   async refresh(req, res) {
     //Get refresh token from cookie
-    console.log(req.cookies);
-    const { refreshtoken: refreshTokenFromCookie } = req.cookies;
+    const { refreshToken: refreshTokenFromCookie } = req.cookies;
+    if (!refreshTokenFromCookie) {
+      return res.status(401).json({ message: "invalid token" });
+    }
     //Check if token is valid
     let userData;
-    try {
-      userData = await tokenService.verifyRefreshToken(refreshTokenFromCookie);
-    } catch (err) {
-      console.log(err);
-      res.status(401).json({ message: "Invalid token" });
-    }
+
+    userData = await tokenService.verifyRefreshToken(refreshTokenFromCookie);
+
     //check if token is in db
     try {
       const token = await tokenService.findRefreshToken(
@@ -109,7 +108,7 @@ class AuthController {
     // check if valid user
     let user;
     try {
-       user = await userService.findUser({ _id: userData._id });
+      user = await userService.findUser({ _id: userData._id });
       if (!user) {
         res.status(404).json({ message: "user is not found" });
       }
@@ -128,7 +127,7 @@ class AuthController {
     }
     //Put token in cookie
     await tokenService.storeRefreshToken(refreshToken, user._id);
-    res.cookie("refreshtoken", refreshToken, {
+    res.cookie("refreshToken", refreshToken, {
       maxAge: 1000 * 60 * 60 * 24 * 30,
       httpOnly: true,
     });
@@ -139,6 +138,19 @@ class AuthController {
     //Send response
     const userDto = new UserDto(user);
     res.json({ user: userDto, auth: true });
+  }
+  async logout(req, res) {
+    const { refreshToken } = req.cookies;
+    //Remove refreshToken from db
+    try {
+      await tokenService.removeRefreshToken(refreshToken);
+      res.clearCookie("accessToekn");
+      res.clearCookie("refreshToken");
+     
+      res.json({ user: null, auth: false });
+    } catch (error) {
+      res.status(500).json({ message: "Internal Error" });
+    }
   }
 }
 module.exports = new AuthController();

@@ -1,17 +1,31 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import styles from './Navigation.module.css'
+import React from "react";
+import { Link } from "react-router-dom";
+import styles from "./Navigation.module.css";
+import {logout} from "../../../http/index";
+import { useDispatch } from "react-redux";
+import { setAuth } from "../../../store/authSlice";
+import { useSelector } from "react-redux";
+
 const Navigation = () => {
-    return (
-        <nav className={`${styles.navbar} containe=`}>
+  const {isAuth} = useSelector((state)=>state.auth)
+  const dispatch = useDispatch();
+  async function logoutHandle() {
+    try {
+      const { data } = await logout();
+      console.log(data);
+      dispatch(setAuth(data));
+    } catch (error) {
+        console.log(error);
+    }
+  }
+  return (
+    <nav className={`${styles.navbar} containe=`}>
+      <Link to={"/"}>
+        <img className={styles.logo} src="/images/logo.png" alt="logo" />
+      </Link>
+     { isAuth && <button onClick={logoutHandle}>Logout</button>}
+    </nav>
+  );
+};
 
-            <Link to={"/"}>
-                <img src="/images/logo.png" alt="logo" />
-               
-            </Link>
-
-        </nav>
-    )
-}
-
-export default Navigation
+export default Navigation;

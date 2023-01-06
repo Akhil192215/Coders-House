@@ -1,5 +1,10 @@
 .navbar {
-    padding: 20px 0;
-    width: 80px;
-    margin: 30px;
+  padding: 20px 0;
+  margin: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  width: 80px;
 }
