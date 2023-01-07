@@ -9,6 +9,7 @@ import Activate from "./pages/Activate/Activate";
 import ProtectedRoutes from "./pages/ProtectedRoutes/ProtectedRoutes";
 import Room from "./pages/Room/Room";
 import { useLoadingWithrefresh } from "./hooks/useLoadingWithRefresh";
+import Loader from "./components/shared/Loader/Loader";
 
 // let auth = true
 // let user = {
@@ -18,7 +19,7 @@ import { useLoadingWithrefresh } from "./hooks/useLoadingWithRefresh";
 function App() {
   const { Loading } = useLoadingWithrefresh();
   return Loading ? (
-    "Loading..."
+    <Loader message={'Loading please wait . . .'}/>
   ) : (
     <BrowserRouter>
       <Navigation />

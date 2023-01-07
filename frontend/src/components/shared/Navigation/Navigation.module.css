@@ -8,3 +8,16 @@
 .logo {
   width: 80px;
 }
+
+.navRight{
+  display: flex;
+  align-items: center;
+}
+
+.profile{
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ea3c12;
+  margin: 0 20px;
+  margin-bottom: 25px;
+}

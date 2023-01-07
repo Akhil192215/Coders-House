@@ -7,12 +7,14 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setAvatar } from "../../../store/activateSlice";
 import { activate } from "../../../http/index";
-import {setAuth} from "../../../store/authSlice"
+import { setAuth } from "../../../store/authSlice";
+import Loader from "../../../components/shared/Loader/Loader";
 
 const StepAvatar = ({ onNext }) => {
   const dispatch = useDispatch();
   const [profile, setProfile] = useState("/images/monkey-avatar.png");
   const { name, avatar } = useSelector((state) => state.activate);
+  const [ loading, setLoading ] = useState(false);
   function captureAvatar(e) {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -24,16 +26,19 @@ const StepAvatar = ({ onNext }) => {
     };
   }
   async function submit() {
-    if(!name || !avatar) return;
+    setLoading(true);
+    if (!name || !avatar) return;
     try {
-      const { data } = await activate({name:name, avatar:avatar});
-      dispatch(setAuth(data))
+      const { data } = await activate({ name: name, avatar: avatar });
+      dispatch(setAuth(data));
       console.log(data);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   }
-
+  if (loading) return <Loader message={"Activation in progress . . ."} />;
   return (
     <>
       <div className="cardWrapper">

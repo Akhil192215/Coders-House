@@ -40,8 +40,9 @@
   
   .card {
     background: #1D1D1D;
-    width: var(--card-width);
-    height: var(--card-height);
+    /* width: var(--card-width);
+    height: var(--card-height); */
+    
     padding: 20px;
     position: relative;
     border-radius: 20px;

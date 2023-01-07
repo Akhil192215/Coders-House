@@ -31,3 +31,46 @@
     color: #EA3C12;
     font-size: 13px;
 }
+
+
+/* === removing default button style ===*/
+.button {
+    margin: 0;
+    height: auto;
+    background: transparent;
+    padding: 0;
+    border: none;
+    color: #fff;
+  }
+  /* === removing default button style ===*/
+.button {
+    margin: 0;
+    height: auto;
+    background: transparent;
+    padding: 0;
+    border: none;
+    color: #fff;
+  }
+  .bottone1 {
+    padding-left: 33px;
+    padding-right: 33px;
+    padding-bottom: 16px;
+    padding-top: 16px;
+    border-radius: 9px;
+    background: #EA3C12;
+    border: none;
+    font-family: inherit;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.4s;
+    color: #fff;
+   }
+   
+   .bottone1:hover {
+    box-shadow: 7px 5px 56px -14px #EA3C12;
+   }
+   
+   .bottone1:active {
+    transform: scale(0.97);
+    box-shadow: 7px 5px 56px -10px #EA3C12;
+   }
