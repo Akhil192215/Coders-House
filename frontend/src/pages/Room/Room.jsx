@@ -1,7 +1,8 @@
 import React from "react";
 import RoomCard from "../../components/shared/RoomCard/RoomCard";
 import styles from "./Room.module.css";
-
+import AddRoomModal from "../../components/shared/AddRoomModal/AddRoomModal";
+import { useState } from "react";
 const rooms = [
   {
     id: 1,
@@ -13,7 +14,7 @@ const rooms = [
         avatar: "/images/monkey-avatar.png",
       },
       {
-        id: 1,
+        id: 2,
         name: "John Doe",
         avatar: "/images/monkey-avatar.png",
       },
@@ -21,7 +22,7 @@ const rooms = [
     totalPeople: 40,
   },
   {
-    id: 1,
+    id: 2,
     topic: "which framework best for frontend?",
     speakers: [
       {
@@ -30,7 +31,7 @@ const rooms = [
         avatar: "/images/monkey-avatar.png",
       },
       {
-        id: 1,
+        id: 2,
         name: "John Doe",
         avatar: "/images/monkey-avatar.png",
       },
@@ -38,7 +39,7 @@ const rooms = [
     totalPeople: 40,
   },
   {
-    id: 1,
+    id: 3,
     topic: "which framework best for frontend?",
     speakers: [
       {
@@ -47,7 +48,7 @@ const rooms = [
         avatar: "/images/monkey-avatar.png",
       },
       {
-        id: 1,
+        id: 2,
         name: "John Doe",
         avatar: "/images/monkey-avatar.png",
       },
@@ -55,7 +56,7 @@ const rooms = [
     totalPeople: 40,
   },
   {
-    id: 1,
+    id: 4,
     topic: "which framework best for frontend?",
     speakers: [
       {
@@ -64,7 +65,7 @@ const rooms = [
         avatar: "/images/monkey-avatar.png",
       },
       {
-        id: 1,
+        id: 2,
         name: "John Doe",
         avatar: "/images/monkey-avatar.png",
       },
@@ -74,6 +75,10 @@ const rooms = [
 ];
 
 function Room() {
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => {
+    setShowModal(true);
+  };
   return (
     <>
       <div className="container">
@@ -86,7 +91,7 @@ function Room() {
             </div>
           </div>
           <div className={styles.right}>
-            <button className={styles.createRoomBtn}>
+            <button onClick={openModal} className={styles.createRoomBtn}>
               <img src="/images/add-room-icon.png" alt="" />
               <span>Start a room</span>
             </button>
@@ -100,6 +105,7 @@ function Room() {
           ))}
         </div>
       </div>
+      {showModal && <AddRoomModal onClose={() => setShowModal(false)} />}
     </>
   );
 }
