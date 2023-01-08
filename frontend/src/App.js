@@ -7,14 +7,10 @@ import GuestRoutes from "./pages/GuestRoutes/GuestRoutes";
 import SemiProtected from "./pages/SemiProtected/SemiProtected";
 import Activate from "./pages/Activate/Activate";
 import ProtectedRoutes from "./pages/ProtectedRoutes/ProtectedRoutes";
-import Room from "./pages/Room/Room";
+import Rooms from "./pages/Rooms/Rooms";
 import { useLoadingWithrefresh } from "./hooks/useLoadingWithRefresh";
 import Loader from "./components/shared/Loader/Loader";
-
-// let auth = true
-// let user = {
-//     activate: true
-// }
+import Room from "./pages/Room/Room";
 
 function App() {
   const { Loading } = useLoadingWithrefresh();
@@ -32,7 +28,8 @@ function App() {
           <Route element={<Activate />} path="/activate" />
         </Route>
         <Route element={<ProtectedRoutes />}>
-          <Route element={<Room />} path="/rooms" />
+          <Route element={<Rooms />} path="/rooms" />
+          <Route element={<Room/>} path="/room/:id" />
         </Route>
       </Routes>
     </BrowserRouter>

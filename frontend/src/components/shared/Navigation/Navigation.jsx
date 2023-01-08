@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 const Navigation = () => {
   // eslint-disable-next-line no-unused-vars
   const { isAuth, user } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
   async function logoutHandle() {
     try {
@@ -24,14 +25,16 @@ const Navigation = () => {
       <Link to={"/"}>
         <img className={styles.logo} src="/images/logo.png" alt="logo" />
       </Link>
-      <div className={styles.navRight}>
-        {/* <h3>{user.name}</h3>
+      {
+        isAuth && <div className={styles.navRight}>
+        <h3>{user?.name}</h3>
         <Link to="/">
-          <img className={styles.profile} src={user.avatar} width="40" height="40" alt="Avatar" />
+          <img className={styles.profile} src={user.avatar? user.avatar : 'images/monkey-avatar.png' } width="40" height="40" alt="Avatar" />
         </Link>
-          <button className={styles.logoutBtn} onClick={logoutHandle}><img src="/images/logout.png" alt="" /></button> */}
+          <button className={styles.logoutBtn} onClick={logoutHandle}><img src="/images/logout.png" alt="" /></button>
       </div>
-      { isAuth && <button onClick={logoutHandle}>Logout</button>}
+      }
+      {/* { isAuth && <button onClick={logoutHandle}>Logout</button>} */}
     </nav>
   );
 };

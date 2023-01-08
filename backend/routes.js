@@ -10,5 +10,6 @@ router.post("/api/activate-user", authMiddleware, activateController.activate);
 router.get("/api/refresh",authController.refresh)
 router.post("/api/logout",authMiddleware,authController.logout)
 router.post("/api/rooms",authMiddleware,roomController.create)
+router.get("/api/rooms",authMiddleware,roomController.index)
 
 module.exports = router;

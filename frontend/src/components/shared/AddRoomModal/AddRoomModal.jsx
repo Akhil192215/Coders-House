@@ -2,16 +2,19 @@ import React from "react";
 import styles from "./AddRoomModal.module.css";
 import InputField from "../Input/InputField";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { createRoom as create } from "../../../http/index";
 
 const AddRoomModal = ({ onClose }) => {
   const [roomType, setRoomType] = useState("open");
   const [topic, setTopic] = useState("");
-  const createRoom = () => {
+  const navigate = useNavigate();
+  const createRoom = async () => {
     if (!topic) return "";
     try {
-      const { data } = create({ topic, roomType });
+      const { data } = await create({ topic, roomType });
       console.log(data);
+      navigate(`/room/${data.id}`);
     } catch (error) {
       console.log(error);
     }

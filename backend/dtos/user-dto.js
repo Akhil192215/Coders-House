@@ -9,7 +9,7 @@ class UserDto {
     this.id = user._id;
     this.phone = user.phone;
     this.name = user.name;
-    this.avatar = user.avatar? `${process.env.baseUrl}${user.avatar}`:null;
+    this.avatar = user.avatar;
     this.activated = user.activated;
     this.createdAt = user.createdAt;
   }
