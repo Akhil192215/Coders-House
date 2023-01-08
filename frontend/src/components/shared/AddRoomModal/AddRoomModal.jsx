@@ -2,9 +2,20 @@ import React from "react";
 import styles from "./AddRoomModal.module.css";
 import InputField from "../Input/InputField";
 import { useState } from "react";
+import { createRoom as create } from "../../../http/index";
 
 const AddRoomModal = ({ onClose }) => {
   const [roomType, setRoomType] = useState("open");
+  const [topic, setTopic] = useState("");
+  const createRoom = () => {
+    if (!topic) return "";
+    try {
+      const { data } = create({ topic, roomType });
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className={styles.modalMask}>
       <div className={styles.modalBoday}>
@@ -13,7 +24,11 @@ const AddRoomModal = ({ onClose }) => {
         </button>
         <div className={styles.modalHeader}>
           <h3 className={styles.heading}>Enter the topic to be disscussed</h3>
-          <InputField fullWidth={"true"} />
+          <InputField
+            value={topic}
+            onChange={(e) => setTopic(e.target.value)}
+            fullWidth={"true"}
+          />
           <h2 className={styles.subHeading}>Room types</h2>
           <div className={styles.roomTypes}>
             <div
@@ -47,7 +62,7 @@ const AddRoomModal = ({ onClose }) => {
         </div>
         <div className={styles.modalFooter}>
           <h2>Start a room, open to everyone</h2>
-          <button className={styles.footerBtn}>
+          <button onClick={createRoom} className={styles.footerBtn}>
             <img src="/images/celebration.png" alt="" />
             <span> Let's go</span>
           </button>
