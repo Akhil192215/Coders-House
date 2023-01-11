@@ -79,7 +79,7 @@ import { getAllrooms } from "../../http";
 function Rooms() {
   const [showModal, setShowModal] = useState(false);
   const [rooms, setRooms] = useState([]);
-  console.log(rooms);
+
 
   useEffect(() => {
     const fetchRooms = async () => {
