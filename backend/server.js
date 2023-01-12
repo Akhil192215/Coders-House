@@ -42,7 +42,7 @@ app.use(cors(corsOption));
 const socketUserMap = {};
 
 io.on('connection', (socket) => {
-    console.log('New connection', socket.id);
+    // console.log('New connection', socket.id);
     socket.on(ACTIONS.JOIN, ({ roomId, user }) => {
         socketUserMap[socket.id] = user;
         const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
@@ -133,6 +133,13 @@ io.on('connection', (socket) => {
     socket.on(ACTIONS.LEAVE, leaveRoom);
 
     socket.on('disconnecting', leaveRoom);
+
+    //chat 
+
+    socket.on('chat',(payload)=>{
+        io.emit("chat", payload);
+       
+    })
 });
 
 app.get("/", (req, res) => {
