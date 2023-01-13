@@ -6,9 +6,10 @@ const UserDto = require("../dtos/user-dto");
 class AuthController {
   async sendOtp(req, res) {
     //Logic
-    let { phone } = req.body;
-    phone = `+91${phone}`;
-    if (!phone) {
+    let { phoneNumber } = req.body;
+    console.log(phoneNumber,'...................');
+    phoneNumber = `+91${phoneNumber}`;
+    if (!phoneNumber) {
       res.status(400).json({ message: "phone number is required" });
     }
     // generate OTP
@@ -16,15 +17,15 @@ class AuthController {
     //hash OTP
     const ttl = 1000 * 60 * 3; //2min
     const expiry = Date.now() + ttl;
-    const data = `${phone}.${otp}.${expiry}`;
+    const data = `${phoneNumber}.${otp}.${expiry}`;
     const hash = hashService.hashOtp(data);
     //send OTP
 
     try {
-      // await otpService.sendBySms(phone, otp);
+      await otpService.sendBySms(phoneNumber, otp);
       res.json({
         hash: `${hash}.${expiry}`,
-        phone,
+        phoneNumber,
         otp,
       });
     } catch (err) {
@@ -36,12 +37,13 @@ class AuthController {
   async verifyOtp(req, res) {
     //Logic
     const { otp, hash, phone } = req.body;
+    
     if (!otp || !hash || !phone) {
       res.status(400).json({ message: "some error occured" });
     }
     const [hashedOtp, expiry] = hash.split(".");
     if (Date.now() > expiry) {
-    return  res.status(400).json({ message: "otp is expired" });
+    return  res.json({ message: "otp is expired" });
     }
     const data = `${phone}.${otp}.${expiry}`;
 
@@ -51,7 +53,7 @@ class AuthController {
         throw new Error();
       }
     } catch (err) {
-     return res.status(400).json({ message: "OTP is invalid" });
+     return res.json({ message: "OTP is invalid" });
     }
 
     let user;

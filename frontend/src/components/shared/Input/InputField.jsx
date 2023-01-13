@@ -5,7 +5,7 @@ const InputField = (props) => {
     <input
       className={styles.input}
       style={{ width: props.fullWidth === "true" ? "100%" : "inherit" }}
-      type="text"
+      type={props.text}
       {...props}
     />
   );

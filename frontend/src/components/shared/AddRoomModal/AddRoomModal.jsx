@@ -40,10 +40,10 @@ const AddRoomModal = ({ onClose }) => {
                 roomType === "open" ? styles.active : ""
               }`}
             >
-              <img src="/images/globe.png" alt="globe" />
-              <span>Open</span>
+              <img className={styles.code} src="/images/mic1.png" alt="globe" />
+              <span>Audio</span>
             </div>
-            <div
+            {/* <div
               onClick={() => setRoomType("social")}
               className={`${styles.typeBox} ${
                 roomType === "social" ? styles.active : ""
@@ -51,15 +51,15 @@ const AddRoomModal = ({ onClose }) => {
             >
               <img src="/images/social.png" alt="globe" />
               <span>Social</span>
-            </div>
+            </div> */}
             <div
               onClick={() => setRoomType("private")}
               className={`${styles.typeBox} ${
                 roomType === "private" ? styles.active : ""
               }`}
             >
-              <img src="/images/lock.png" alt="globe" />
-              <span>Private</span>
+              <img className={styles.code} src="/images/code.png" alt="globe" />
+              <span>Coding</span>
             </div>
           </div>
         </div>

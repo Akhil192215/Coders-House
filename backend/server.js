@@ -12,6 +12,7 @@ const dbConnect = require("./database");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const ACTIONS = require("./actions");
+const liveChatService = require("./services/liveChat-service");
 const io = require('socket.io')(server,{
   cors: {
     origin:"http://localhost:3000",
@@ -137,7 +138,17 @@ io.on('connection', (socket) => {
     //chat 
 
     socket.on('chat',(payload)=>{
+        // try {
+        //   liveChatService.saveChat(payload)
+        // } catch (error) {
+            
+        // }
+    //  liveChatService.getChatData().then((data)=>{
+
         io.emit("chat", payload);
+    //   })
+      
+   
        
     })
 });

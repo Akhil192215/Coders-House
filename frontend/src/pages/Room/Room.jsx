@@ -15,9 +15,10 @@ const Room = () => {
   const [room, setRoom] = useState(null);
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
+  const [newMessage, setNewMessage] = useState(false);
 
   const { clients, provideRef, handleMute } = useWEBRTC(roomId, user);
- 
+
   const naviagate = useNavigate();
 
   const [isMuted, setMuted] = useState(true);
@@ -27,12 +28,15 @@ const Room = () => {
     e.preventDefault();
     socket.emit("chat", { message });
     setMessage("");
+   
   };
   useEffect(() => {
     socket.on("chat", (payload) => {
       setChat([...chat, payload]);
+      setNewMessage(true)
     });
   });
+  console.log(chat)
   // useEffect(() => {
   //     const fetchRoom = async () => {
   //         const { data } = await getRoom(roomId);
@@ -41,6 +45,12 @@ const Room = () => {
 
   //     fetchRoom();
   // }, [roomId]);
+
+  useEffect(()=>{
+    if(message){
+      setNewMessage(false)
+    }
+  },[message])
 
   useEffect(() => {
     handleMute(isMuted, user.id);
@@ -77,10 +87,14 @@ const Room = () => {
               <span>Leave quietly</span>
             </button>
 
-            <button onClick={()=>setHide(false)} className={styles.actionBtn1}>
+            <button
+              onClick={() => setHide(false)}
+              className={styles.actionBtn1}
+            >
               <span>Show chat </span>
               <img src="/images/chat-bubble.png" alt="win-icon" />
             </button>
+            <div className={`${newMessage ? styles.newMessage : ""}`}></div>
           </div>
         </div>
         <div className={styles.clientsList}>
@@ -99,6 +113,7 @@ const Room = () => {
                       provideRef(instance, client.id);
                     }}
                   />
+                  {/* <span className={styles.remove}>R</span> */}
                   <button
                     onClick={() => handleMuteClick(client.id)}
                     className={styles.micBtn}
@@ -126,8 +141,14 @@ const Room = () => {
         <div className={`${hide ? styles.hide : styles.chat}`}>
           <div className={styles.messageBox}>
             {chat.map((payload, index) => (
-           <div className={styles.messagebubble}> <img src={user.avatar} alt="" /> <p>{payload.message}</p></div>  
-              ))}
+         
+              <div className={styles.messagebubble}>
+                {" "}
+                
+                <img src={user.avatar} alt="" /> <p>{payload.message }</p>
+              </div>
+              
+            ))}
           </div>
 
           <div className={styles.chatInput}>
