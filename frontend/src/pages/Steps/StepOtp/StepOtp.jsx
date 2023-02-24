@@ -50,7 +50,7 @@ const StepOtp = ({ navFuction }) => {
           </div>
           <div className={styles.actionButton}>
             <Button onClick={submit} text={"Verify"} />
-          </div>
+          </div>  
           <br />
           <p onClick={resendOtp}>resend otp?</p>
           <p className={styles.bottomParagraph}>

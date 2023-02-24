@@ -1,12 +1,16 @@
-.input{
-    background: #323232;
-    border: none;
-    margin-bottom:10px 20px;
-    padding: 10px;
-    border-radius: 10px;
-    width: 250px;
-    height: 24px;
-    outline: none;
-    color: #fff;
-    font-size: 18px;
+.input {
+  background: #323232;
+  border: none;
+  margin-bottom: 10px 20px;
+  padding: 10px;
+  border-radius: 10px;
+  width: 250px;
+  height: 24px;
+  outline: none;
+  color: #fff;
+  font-size: 18px;
+}
+
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
