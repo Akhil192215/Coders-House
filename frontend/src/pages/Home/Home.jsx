@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Home.module.css";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/shared/Button/Button";
 
 function Home() {
