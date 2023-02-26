@@ -7,7 +7,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - /mongodbdata/data:/data/db
+      - /var/databases/mongodb/codershouse-data:/data/db
   backend:
     build:
       dockerfile: Dockerfile.prod
@@ -34,7 +34,7 @@ services:
     env_file:
       - ./frontend/.env
     volumes:
-      - ./deploy/default.conf:/etc/nginx/conf.d/default.conf
+      - ./deploy/default.conf:/etc/nginx/sites-available/default
       - /var/certs/etc-letsencrypt:/etc/letsencrypt
     depends_on:
       - backend
