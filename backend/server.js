@@ -15,7 +15,7 @@ const ACTIONS = require("./actions");
 const liveChatService = require("./services/liveChat-service");
 const io = require('socket.io')(server,{
   cors: {
-    origin:"http://localhost:3000",
+    origin:process.env.FRONT_URL,
     methods: ["GET", "POST"]
   }
 });
@@ -34,7 +34,7 @@ app.use("/storage", express.static("storage"));
 dbConnect();
 const corsOption = {
   credentials: true,
-  origin: ["http://localhost:3000"],
+  origin: [ process.env.FRONT_URL],
   methods: ["GET", "POST"],
 };
 app.use(cors(corsOption));
