@@ -112,7 +112,7 @@ class AuthController {
     try {
       user = await userService.findUser({ _id: userData._id });
       if (!user) {
-        res.status(404).json({ message: "user is not found" });
+       return res.status(404).json({ message: "user is not found" });
       }
     } catch (err) {
       res.status(500).json({ message: "Internal Error" });

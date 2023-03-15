@@ -27,3 +27,42 @@
   background: none;
   cursor: pointer;
 }
+.chatsBox{
+  margin-right: 100px;
+}
+
+.chats{
+  display: flex;
+  align-items: center;
+  background: #05a9bc;
+  padding: 5px 20px;
+  border-radius: 20px;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+.chats span {
+  font-size: 16px;
+  margin-left: 10px;
+}
+.chats:hover {
+  background: #034d49;
+  transition: all 0.3s ease-in-out;
+}
+.searchBox {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  background: #262626;
+  padding: 0 10px;
+  min-width: 300px;
+  border-radius: 20px;
+}
+
+.searchIput {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 10px;
+  color: #ffff;
+  width: 100%;
+}

@@ -22,18 +22,34 @@ const Navigation = () => {
   }
   return (
     <nav className={`${styles.navbar} containe=`}>
+      
       <Link to={"/"}>
         <img className={styles.logo} src="/images/logo.png" alt="logo" />
       </Link>
+      {/* <div className={styles.searchBox}>
+              <img src="/images/search-icon.png" alt="" />
+              <input className={styles.searchIput} type="text" />
+            </div> */}
       {
+        
         isAuth && <div className={styles.navRight}>
+             <Link to="/chats">
+        <div className={styles.chatsBox} >
+        <button className={styles.chats}>
+              <img src="images/chat-bubble.png" alt="" />
+              <span>Go to chats</span>
+            </button>
+        </div>
+        </Link>
         <h3>{user?.name}</h3>
         <Link to="/">
           <img className={styles.profile} src={user.avatar? user.avatar : 'images/monkey-avatar.png' } width="40" height="40" alt="Avatar" />
         </Link>
+     
           <button className={styles.logoutBtn} onClick={logoutHandle}><img src="/images/logout.png" alt="" /></button>
       </div>
       }
+      
       {/* { isAuth && <button onClick={logoutHandle}>Logout</button>} */}
     </nav>
   );

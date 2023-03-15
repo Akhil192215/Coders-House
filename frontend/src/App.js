@@ -11,14 +11,29 @@ import Rooms from "./pages/Rooms/Rooms";
 import { useLoadingWithrefresh } from "./hooks/useLoadingWithRefresh";
 import Loader from "./components/shared/Loader/Loader";
 import Room from "./pages/Room/Room";
+import Chats from "./pages/Chats/Chats";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import SideDrawer from "./components/shared/SideDrawer/SideDrawer";
 
 function App() {
+  const theme = extendTheme({
+    styles: {
+      global: () => ({
+        body: {
+          bg: "",
+          color: "white"
+        },
+      }),
+    },
+  });
   const { Loading } = useLoadingWithrefresh();
   return Loading ? (
     <Loader message={'Loading please wait . . .'}/>
   ) : (
+    <ChakraProvider theme={theme}>
     <BrowserRouter>
-      <Navigation />
+      {/* <Navigation /> */}
+      <SideDrawer/>
       <Routes>
         <Route element={<GuestRoutes />}>
           <Route element={<Authenticate />} path="/authenticate" />
@@ -30,9 +45,11 @@ function App() {
         <Route element={<ProtectedRoutes />}>
           <Route element={<Rooms />} path="/rooms" />
           <Route element={<Room/>} path="/room/:id" />
+          <Route element={<Chats/>} path="/chats" />
         </Route>
       </Routes>
     </BrowserRouter>
+    </ChakraProvider>
   );
 }
 

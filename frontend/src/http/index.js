@@ -15,6 +15,16 @@ export const activate = (data) => api.post("/api/activate-user", data);
 export const logout = () => api.post("/api/logout");
 export const createRoom = (data) => api.post("/api/rooms", data);
 export const getAllrooms = () => api.get("/api/rooms");
+export const searchUsers = (search) =>
+  api.get(`/api/chat/search?search=${search}`);
+export const accessUserChat = (userId) => api.post("/api/chat", { userId });
+export const fetchChats = (userId) => api.get("/api/chat", { userId });
+export const createGroup = (data) => api.post("/api/group", { data });
+export const groupRename = (data) => api.post("/api/chat/rename", data);
+export const addUser = (data) => api.post("/api/chat/addtogroup", data);
+export const groupRemove = (data) => api.post("/api/chat/groupremove", data);
+export const sendMessage = (data) => api.post("/api/message", data);
+export const fetchAllMessages = (chatId) => api.get(`/api/message/${chatId}`,);
 
 //Interceptors
 

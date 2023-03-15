@@ -8,7 +8,7 @@ const userSchema = new Schema(
     name:{type:String, required:false},
     avatar:{type:String, required:false, get:(avatar)=>{
       if(avatar){
-         return `${process.env.BASE_URL}${avatar}`
+         return `${"http://localhost:4000"}${avatar}`
       }
      return avatar
     }},
