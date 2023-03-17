@@ -167,6 +167,11 @@ io.on("connection", (socket) => {
     // console.log("USER DISCONNECTED");
     socket.leave(userData.id);
   });
+
+  //Code
+  socket.on('code change', (data) => {
+    io.emit('code change', data);
+  });
 });
 
 app.get("/", (req, res) => {

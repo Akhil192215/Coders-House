@@ -1,8 +1,6 @@
-
 html {
   box-sizing: border-box;
   font-size: 16px;
-  
 }
 
 body,
@@ -46,7 +44,6 @@ body {
   width: 1200px;
   max-width: 90%;
   margin: 0 auto;
-  
 }
 button {
   /* background: none;
@@ -72,4 +69,8 @@ button {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.CodeMirror {
+  height: 100% !important;
 }

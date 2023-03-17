@@ -14,6 +14,7 @@ import Room from "./pages/Room/Room";
 import Chats from "./pages/Chats/Chats";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import SideDrawer from "./components/shared/SideDrawer/SideDrawer";
+import CodeRoom from "./pages/CodeRoom/CodeRoom";
 
 function App() {
   const theme = extendTheme({
@@ -45,6 +46,7 @@ function App() {
         <Route element={<ProtectedRoutes />}>
           <Route element={<Rooms />} path="/rooms" />
           <Route element={<Room/>} path="/room/:id" />
+          <Route element={<CodeRoom/>} path="/code/:id" />
           <Route element={<Chats/>} path="/chats" />
         </Route>
       </Routes>

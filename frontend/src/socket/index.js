@@ -9,3 +9,4 @@ export function socketInit() {
   };
   return io(process.env.REACT_APP_SOCKET_SERVER_URL, options);
 }
+
