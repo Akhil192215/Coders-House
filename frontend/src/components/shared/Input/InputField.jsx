@@ -3,9 +3,10 @@ import styles from "./inputField.module.css";
 const InputField = (props) => {
   return (
     <input
+      style={{ height: "40px" }}
       type={props.text}
       className={styles.input}
-      style={{ width: props.fullWidth === "true" ? "100%" : "inherit" }}
+      placeholder={props.placeholder}
       {...props}
     />
   );

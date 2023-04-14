@@ -3,11 +3,23 @@ const hashService = require("../services/hash-service");
 const userService = require("../services/user-service");
 const tokenService = require("../services/token-service");
 const UserDto = require("../dtos/user-dto");
+const admin = require("firebase-admin");
+
+admin.initializeApp({
+  apiKey: "AIzaSyCKrNkrv5EGmBuMHdzv5VHb5WlTchyFZhw",
+  authDomain: "codershouse-a818a.firebaseapp.com",
+  projectId: "codershouse-a818a",
+  storageBucket: "codershouse-a818a.appspot.com",
+  messagingSenderId: "459500052133",
+  appId: "1:459500052133:web:16fe35bee157c585c8f74c",
+  measurementId: "G-4G8XYWYJ64",
+});
+
 class AuthController {
   async sendOtp(req, res) {
     //Logic
     let { phoneNumber } = req.body;
-    console.log(phoneNumber,'...................');
+    console.log(phoneNumber, "...................");
     phoneNumber = `+91${phoneNumber}`;
     if (!phoneNumber) {
       res.status(400).json({ message: "phone number is required" });
@@ -22,7 +34,8 @@ class AuthController {
     //send OTP
 
     try {
-      // await otpService.sendBySms(phoneNumber, otp);
+      await otpService.sendBySms(phoneNumber, otp);
+
       res.json({
         hash: `${hash}.${expiry}`,
         phoneNumber,
@@ -37,13 +50,13 @@ class AuthController {
   async verifyOtp(req, res) {
     //Logic
     const { otp, hash, phone } = req.body;
-    
+
     if (!otp || !hash || !phone) {
       res.status(400).json({ message: "some error occured" });
     }
     const [hashedOtp, expiry] = hash.split(".");
     if (Date.now() > expiry) {
-    return  res.json({ message: "otp is expired" });
+      return res.json({ message: "otp is expired" });
     }
     const data = `${phone}.${otp}.${expiry}`;
 
@@ -53,15 +66,24 @@ class AuthController {
         throw new Error();
       }
     } catch (err) {
-     return res.json({ message: "OTP is invalid" });
+      return res.json({ message: "OTP is invalid" });
     }
 
     let user;
 
     try {
       user = await userService.findUser({ phone });
-      if (!user) {
-        user = await userService.createUser({ phone });
+      console.log(user);
+      if (user) {
+        if (user.blockStatus) {
+          return res.status(400).json({ message: "user is blocked" });
+        }
+      } else {
+        user = await userService.createUser({
+          phone,
+          blockStatus: false,
+          isUser: true,
+        });
       }
     } catch (err) {
       console.log(err);
@@ -112,7 +134,7 @@ class AuthController {
     try {
       user = await userService.findUser({ _id: userData._id });
       if (!user) {
-       return res.status(404).json({ message: "user is not found" });
+        return res.status(404).json({ message: "user is not found" });
       }
     } catch (err) {
       res.status(500).json({ message: "Internal Error" });
@@ -148,7 +170,7 @@ class AuthController {
       await tokenService.removeRefreshToken(refreshToken);
       res.clearCookie("accessToekn");
       res.clearCookie("refreshToken");
-     
+
       res.json({ user: null, auth: false });
     } catch (error) {
       res.status(500).json({ message: "Internal Error" });

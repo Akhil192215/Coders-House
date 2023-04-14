@@ -24,7 +24,10 @@ export const groupRename = (data) => api.post("/api/chat/rename", data);
 export const addUser = (data) => api.post("/api/chat/addtogroup", data);
 export const groupRemove = (data) => api.post("/api/chat/groupremove", data);
 export const sendMessage = (data) => api.post("/api/message", data);
-export const fetchAllMessages = (chatId) => api.get(`/api/message/${chatId}`,);
+export const fetchAllMessages = (chatId) => api.get(`/api/message/${chatId}`);
+export const adminLogin = (data) => api.post("/api/admin-login", data);
+export const getAllusers = () => api.get("/api/allUsers");
+export const blockUnblock = (data) => api.post("/api/blockUnblock", data);
 
 //Interceptors
 

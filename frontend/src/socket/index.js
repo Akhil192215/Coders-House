@@ -7,6 +7,6 @@ export function socketInit() {
     timeout: 10000,
     transports: ["websocket"],
   };
-  return io(process.env.REACT_APP_SOCKET_SERVER_URL, options);
+  return io("http://localhost:4000/", options);
 }
 

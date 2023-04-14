@@ -30,16 +30,18 @@ img {
 }
 
 body {
-  background-color: #000;
+  background-color: #0b192f;
   color: white;
   font-family: "Nunito", sans-serif;
-  /*    
+/* 
       background-image:    linear-gradient(
         rgba(1, 0, 0, 0.907), 
         rgba(0, 0, 0, 0.908)
-      ), url(https://learn.vscode.one/img/color-bars.svg); */
+      ), url(https://learn.vscode.one/img/color-bars.svg);  */
 }
-
+iframe {
+  background-color: #f0f0f0; /* set the background color to whatever you like */
+}
 .container {
   width: 1200px;
   max-width: 90%;

@@ -1,0 +1,11 @@
+/* Dark theme */
+body.dark-mode {
+    background-color: #1a1a1a;
+    color: #fff;
+  }
+  
+  /* Light theme */
+  body.light-mode {
+    background-color: #fff;
+    color: #1a1a1a;
+  }

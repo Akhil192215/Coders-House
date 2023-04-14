@@ -4,31 +4,46 @@ import InputField from "../Input/InputField";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createRoom as create } from "../../../http/index";
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import {
+  Box,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  useColorMode,
+} from "@chakra-ui/react";
 
 const AddRoomModal = ({ onClose }) => {
-  const nav = useNavigate()
+  const nav = useNavigate();
   const [roomType, setRoomType] = useState("open");
   const [topic, setTopic] = useState("");
+  const { colorMode } = useColorMode();
   const navigate = useNavigate();
   const createRoom = async () => {
     if (!topic) return "";
+
     try {
       const { data } = await create({ topic, roomType });
       console.log(data);
-      navigate(`/room/${data.id}`);
+      if (roomType === "open") return navigate(`/room/${data.id}`);
+      navigate(`/code/${data.id}`);
     } catch (error) {
       console.log(error);
     }
   };
   const joinRoom = async () => {
-    if(!topic) return ""
+    if (!topic) return "";
     console.log(topic);
-    nav(`/code/${topic}`)
+    nav(`/code/${topic}`);
   };
   return (
     <div className={styles.modalMask}>
-      <div className={styles.modalBoday}>
+      <Box
+        className={styles.modalBoday}
+        bg={colorMode === "dark" ? "#182a46" : "#0b192f"}
+        color={colorMode === "dark" ? "#c8d7f4" : "#65fbd7"}
+      >
         <button onClick={onClose} className={styles.closeBtn}>
           <img src="images/close.png" alt="" />
         </button>
@@ -137,7 +152,7 @@ const AddRoomModal = ({ onClose }) => {
             </TabPanel>
           </TabPanels>
         </Tabs>
-      </div>
+      </Box>
     </div>
   );
 };

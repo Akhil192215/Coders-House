@@ -10,8 +10,7 @@ import { setAuth } from "../../../store/authSlice";
 import { useDispatch } from "react-redux";
 import { warn } from "../../../components/shared/Alert/Alert";
 import { ToastContainer } from "react-toastify";
-import { sendOtp } from "../../../http/index"
-
+import { sendOtp } from "../../../http/index";
 
 const StepOtp = ({ navFuction }) => {
   const { phone, hash } = useSelector((state) => state.auth.otp);
@@ -23,6 +22,8 @@ const StepOtp = ({ navFuction }) => {
     }
     try {
       const { data } = await verifyOtp({ otp, phone, hash });
+      console.log(data);
+
       if (data.message === "OTP is invalid") {
         return warn("OTP is invalid");
       }
@@ -33,13 +34,18 @@ const StepOtp = ({ navFuction }) => {
       dispatch(setAuth(data));
     } catch (err) {
       console.log(err);
+      if (err.response.data.message === "user is blocked") {
+        return warn("Your blocked by the Admin ");
+      }
     }
   };
+
   console.log(phone);
+
   const resendOtp = async () => {
-    console.log('in here',phone);
-  const {data} = await sendOtp({phoneNumber:phone})
-  console.log(data);
+    console.log("in here", phone);
+    const { data } = await sendOtp({ phoneNumber: phone });
+    console.log(data);
   };
   return (
     <>
@@ -50,7 +56,7 @@ const StepOtp = ({ navFuction }) => {
           </div>
           <div className={styles.actionButton}>
             <Button onClick={submit} text={"Verify"} />
-          </div>  
+          </div>
           <br />
           <p onClick={resendOtp}>resend otp?</p>
           <p className={styles.bottomParagraph}>

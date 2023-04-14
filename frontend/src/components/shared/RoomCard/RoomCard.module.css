@@ -1,5 +1,5 @@
 .card{
-    background-color:#222222;
+
     border-radius: 10px;
     padding: 20px;
     cursor: pointer;
@@ -15,7 +15,7 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #b42400;
+    border: 2px solid #65fbd7;
     position: absolute;
     top: 0;
     left: 0;

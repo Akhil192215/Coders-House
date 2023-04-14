@@ -8,10 +8,11 @@ import { Controlled as ControlledEditor } from "react-codemirror2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCompressAlt, faExpandAlt } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Editor.module.css";
+import { IoEllipsisVerticalOutline } from "react-icons/io5";
 
 const Editor = ({ displayName, language, value, onChange }) => {
   const [open, setOpen] = useState(true);
-  const edtorRef = useRef(null)
+  const edtorRef = useRef(null);
   const handleChange = (editor, data, value) => {
     onChange(value);
   };
@@ -21,6 +22,7 @@ const Editor = ({ displayName, language, value, onChange }) => {
         {displayName}
         <button onClick={() => setOpen((prev) => !prev)}>
           <FontAwesomeIcon icon={open ? faCompressAlt : faExpandAlt} />
+    
         </button>
       </div>
       <ControlledEditor

@@ -1,11 +1,14 @@
 import React from "react";
 import styles from "./RoomCard.module.css";
 import { useNavigate } from "react-router-dom";
+import { Box, useColorMode } from "@chakra-ui/react";
 
 const RoomCard = ({room}) => {
   const navigate = useNavigate()
+  const { colorMode } = useColorMode()
   return (
-    <div onClick={()=>{navigate(`/room/${room.id}`)}} className={styles.card}>
+    <Box bg={colorMode === "dark" ? "#182a46" : "#182a46"}
+    color={colorMode === "dark" ? "#c8d7f4" : "#65fbd7"} onClick={()=>{navigate(`/room/${room.id}`)}} className={styles.card}>
       <h3 className={styles.topic}>{room.topic}</h3>
       <div className={`${styles.speakers} ${room.speakers.length===1 ? styles.singleSpeaker : ''}`}>
         <div className={styles.avatars}>
@@ -26,7 +29,7 @@ const RoomCard = ({room}) => {
         <span>{room.totalPeople}</span>
         <img src="images/user-icon.png" alt="" />
       </div>
-    </div>
+    </Box>
   );
 };
 

@@ -5,6 +5,7 @@ const authMiddleware = require("./middleware/authMiddleware");
 const roomController = require("./controllers/roomController");
 const chatController = require("./controllers/chatController");
 const messageController = require("./controllers/messageController");
+const adminDashboard = require("./controllers/adminDashboard");
 
 router.post("/api/send-otp", authController.sendOtp);
 router.post("/api/verify-otp", authController.verifyOtp);
@@ -27,5 +28,11 @@ router.route('/api/chat/groupremove').post(authMiddleware,chatController.removeF
 //message 
 router.route('/api/message').post(authMiddleware,messageController.sendMessage)
 router.route('/api/message/:chatId').get(authMiddleware,messageController.allMessages)
+
+//Admin
+router.post('/api/admin-login',adminDashboard.adminLogin)
+router.get("/api/allUsers",adminDashboard.getAllUsers)
+router.post("/api/blockUnblock",adminDashboard.blockUnblockuser)
+
 
 module.exports = router;

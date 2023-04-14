@@ -7,6 +7,7 @@ import {
   Input,
   Spinner,
   Text,
+  useColorMode,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,10 +18,12 @@ import UpdateGroupChatModal from "../../components/UpdateGroupChatModal/UpdateGr
 import { getSender, getSenderFull } from "../../config/ChatLogics";
 import { fetchAllMessages, sendMessage } from "../../http";
 import { socketInit } from "../../socket";
+import { setNotification } from "../../store/notificationSlice";
 import { setSelectedChat } from "../../store/setChatSlice";
 import styles from "../SingleChat/SingleChat.module.css";
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [typing, setTyping] = useState();
+  const notification = useSelector((state) => state.notification.notification);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
@@ -29,7 +32,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const { user } = useSelector((state) => state.auth);
   const { chat } = useSelector((state) => state.setChat);
   const dispatch = useDispatch();
-  var selectedChatCompare;
+  const { colorMode } = useColorMode();
+  var selectedChatCompare = chat;
   useEffect(() => {
     const init = async () => {
       socket.current = socketInit();
@@ -38,6 +42,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     socket.current.emit("setup", user);
     // socket.current.on("connection", () => setSocketConnection(true));
   }, []);
+  // console.log(notification, "-------------------------------------");
   const sendMessageHandler = async (e) => {
     if (e.key === "Enter" && newMessage) {
       try {
@@ -46,6 +51,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           content: newMessage,
           chatId: chat[0]._id,
         });
+        // console.log("data");
+        // console.log(data);
+        // console.log("data");
         socket.current.emit("new message", data);
         setMessages((prevMessages) => [...prevMessages, data]);
       } catch (error) {
@@ -59,7 +67,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     try {
       setLoading(true);
       const { data } = await fetchAllMessages(chat[0]._id);
-      console.log(data);
+
       setMessages(data);
       setLoading(false);
       socket.current.emit("join chat", chat[0]._id);
@@ -77,6 +85,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   useEffect(() => {
     fetchMessages();
     selectedChatCompare = chat[0];
+    
   }, [chat[0]]);
   // useEffect(() => {
   //   socket.current.emit("setup", user);
@@ -84,19 +93,21 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   // }, []);
   useEffect(() => {
     socket.current.on("message received", (newMessageRecived) => {
+      // console.log("newMessageRecived");
+      // console.log(newMessageRecived);
+      // console.log("newMessageRecived");
       if (
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessageRecived.chat._id
       ) {
+        // console.log(newMessageRecived);
         //give notification
+        // if (!notification.includes(newMessageRecived)) {
+        //   dispatch(setNotification(newMessageRecived));
+        //   setFetchAgain(!fetchAgain);
+        // }
       } else {
-        // console.log(messages, newMessageRecived);
-
-        // console.log("newMessageRecived");
-        // console.log(messages);
-        // console.log("newMessageRecived");
         setMessages((prevMessages) => [...prevMessages, newMessageRecived]);
-        // console.log('after',messages);
       }
     });
   });
@@ -142,7 +153,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             flexDir="column"
             justifyContent="flex-end"
             p={3}
-            bg="#2b2a2a"
+            bg={colorMode === "dark" ? "#0b192f" : "#182a46"}
+            color={colorMode === "dark" ? "#c8d7f4" : "#65fbd7"}
             w="100%"
             h="100%"
             borderRadius="lg"

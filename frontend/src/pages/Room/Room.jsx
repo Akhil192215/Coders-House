@@ -6,10 +6,27 @@ import { useParams, useNavigate } from "react-router-dom";
 // import { getRoom } from '../../http';
 
 import styles from "./Room.module.css";
+import { IoEllipsisVerticalOutline } from "react-icons/io5";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverFooter,
+  PopoverHeader,
+  PopoverTrigger,
+  useColorMode,
+  useDisclosure,
+} from "@chakra-ui/react";
 const socket = socketInit();
 
 const Room = () => {
   const user = useSelector((state) => state.auth.user);
+  const { isOpen, onToggle, onClose } = useDisclosure();
 
   const { id: roomId } = useParams();
   const [room, setRoom] = useState(null);
@@ -20,23 +37,23 @@ const Room = () => {
   const { clients, provideRef, handleMute } = useWEBRTC(roomId, user);
 
   const naviagate = useNavigate();
-
+  const { colorMode } = useColorMode();
   const [isMuted, setMuted] = useState(true);
   const [hide, setHide] = useState(true);
+  const [userId, setUserId] = useState("");
 
   const sendChat = (e) => {
     e.preventDefault();
     socket.emit("chat", { message });
     setMessage("");
-   
   };
   useEffect(() => {
     socket.on("chat", (payload) => {
       setChat([...chat, payload]);
-      setNewMessage(true)
+      setNewMessage(true);
     });
   });
-  console.log(chat)
+  console.log(chat);
   // useEffect(() => {
   //     const fetchRoom = async () => {
   //         const { data } = await getRoom(roomId);
@@ -46,11 +63,11 @@ const Room = () => {
   //     fetchRoom();
   // }, [roomId]);
 
-  useEffect(()=>{
-    if(message){
-      setNewMessage(false)
+  useEffect(() => {
+    if (message) {
+      setNewMessage(false);
     }
-  },[message])
+  }, [message]);
 
   useEffect(() => {
     handleMute(isMuted, user.id);
@@ -75,7 +92,11 @@ const Room = () => {
           <span>All voice rooms</span>
         </button>
       </div>
-      <div className={styles.clientsWrap}>
+      <Box
+        bg={colorMode === "dark" ? "#182a46" : "#0b192f"}
+        color={colorMode === "dark" ? "#c8d7f4" : "#65fbd7"}
+        className={styles.clientsWrap}
+      >
         <div className={styles.header}>
           {room && <h2 className={styles.topic}>{room.topic}</h2>}
           <div className={styles.actions}>
@@ -113,7 +134,7 @@ const Room = () => {
                       provideRef(instance, client.id);
                     }}
                   />
-                  {/* <span className={styles.remove}>R</span> */}
+
                   <button
                     onClick={() => handleMuteClick(client.id)}
                     className={styles.micBtn}
@@ -132,6 +153,39 @@ const Room = () => {
                       />
                     )}
                   </button>
+                  <Popover
+                    returnFocusOnClose={false}
+                    isOpen={isOpen}
+                    onClose={onClose}
+                    placement="right"
+                    closeOnBlur={false}
+                  >
+                    <PopoverTrigger>
+                      <button
+                        onClick={onToggle}
+                        style={{ "margin-left": "80px", "margin-top": "7px" }}
+                      >
+                        <IoEllipsisVerticalOutline />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <PopoverHeader fontWeight="semibold">
+                        Options
+                      </PopoverHeader>
+                      <PopoverArrow />
+                      <PopoverCloseButton />
+                      <PopoverBody>
+                        <Button colorScheme="red">Mute</Button>{" "}
+                        <Button colorScheme="red">Follow</Button>{" "}
+                      </PopoverBody>
+                      <PopoverFooter display="flex" justifyContent="flex-end">
+                        <ButtonGroup size="sm">
+                          {/* <Button variant="outline">Cancel</Button>
+                          <Button colorScheme="red">Apply</Button> */}
+                        </ButtonGroup>
+                      </PopoverFooter>
+                    </PopoverContent>
+                  </Popover>
                 </div>
                 <h4>{client.name}</h4>
               </div>
@@ -141,13 +195,10 @@ const Room = () => {
         <div className={`${hide ? styles.hide : styles.chat}`}>
           <div className={styles.messageBox}>
             {chat.map((payload, index) => (
-         
               <div className={styles.messagebubble}>
                 {" "}
-                
-                <img src={user.avatar} alt="" /> <p>{payload.message }</p>
+                <img src={user.avatar} alt="" /> <p>{payload.message}</p>
               </div>
-              
             ))}
           </div>
 
@@ -166,7 +217,7 @@ const Room = () => {
             </form>
           </div>
         </div>
-      </div>
+      </Box>
     </div>
   );
 };

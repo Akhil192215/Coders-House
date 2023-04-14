@@ -12,7 +12,7 @@
 
 .modalBoday {
   position: relative;
-  background: #1d1d1d;
+
   width: 50%;
   max-width: 500px;
   padding: 30px;
@@ -62,7 +62,7 @@
 
 .footerBtn {
   background: #20bd5f;
-  color: #ffff;
+
   display: flex;
   align-items: center;
   outline: none;

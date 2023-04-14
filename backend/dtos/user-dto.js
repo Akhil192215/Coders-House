@@ -10,6 +10,7 @@ class UserDto {
     this.phone = user.phone;
     this.name = user.name;
     this.avatar = user.avatar;
+    this.isUser = user.isUser;
     this.activated = user.activated;
     this.createdAt = user.createdAt;
   }

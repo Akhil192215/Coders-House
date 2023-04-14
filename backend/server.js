@@ -84,7 +84,9 @@ io.on("connection", (socket) => {
   });
 
   socket.on(ACTIONS.UNMUTE, ({ roomId, userId }) => {
+    // console.log(userId);
     const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
+    console.log(clients);
     clients.forEach((clientId) => {
       io.to(clientId).emit(ACTIONS.UNMUTE, {
         peerId: socket.id,
@@ -97,7 +99,7 @@ io.on("connection", (socket) => {
     const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
     clients.forEach((clientId) => {
       if (clientId !== socket.id) {
-        console.log("mute info");
+        // console.log(userId);
         io.to(clientId).emit(ACTIONS.MUTE_INFO, {
           userId,
           isMute,
@@ -144,34 +146,39 @@ io.on("connection", (socket) => {
     //   })
   });
 
-  //CHAT
-  socket.on("setup", (userData) => {
-    socket.join(userData.id);
-    socket.emit("connected");
-  });
-  socket.on("join chat", (room) => {
-    socket.join(room);
-    console.log("user joined " + room);
-  });
-  socket.on("typing", (room) => socket.in(room).emit("typing"));
-  socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
-  socket.on("new message", (newMessageRecived) => {
-    let chat = newMessageRecived.chat;
-    if (!chat.users) return console.log("chat.users is not defined");
-    chat.users.forEach((user) => {
-      if (user._id === newMessageRecived.sender._id) return;
-      socket.in(user._id).emit("message received", newMessageRecived);
-    });
-  });
-  socket.off("setup", () => {
-    // console.log("USER DISCONNECTED");
-    socket.leave(userData.id);
-  });
-
+  
   //Code
   socket.on('code change', (data) => {
     io.emit('code change', data);
   });
+});
+//CHAT
+io.on("connection", (socket) => {
+socket.on("setup", (userData) => {
+  socket.join(userData.id);
+  socket.emit("connected");
+  console.log("setup",userData.id);
+});
+socket.on("join chat", (room) => {
+  socket.join(room);
+  console.log("join chat",room);
+});
+socket.on("typing", (room) => socket.in(room).emit("typing"));
+socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
+socket.on("new message", (newMessageRecived) => {
+  let chat = newMessageRecived.chat;
+  console.log(newMessageRecived);
+  if (!chat.users) return console.log("chat.users is not defined");
+  chat.users.forEach((user) => {
+    console.log(newMessageRecived.content);
+    if (user._id === newMessageRecived.sender._id) return;
+    socket.in(user._id).emit("message received", newMessageRecived);
+  });
+});
+socket.off("setup", () => {
+  console.log("USER DISCONNECTED");
+  socket.leave(userData.id);
+});
 });
 
 app.get("/", (req, res) => {

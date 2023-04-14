@@ -15,42 +15,50 @@ import Chats from "./pages/Chats/Chats";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import SideDrawer from "./components/shared/SideDrawer/SideDrawer";
 import CodeRoom from "./pages/CodeRoom/CodeRoom";
-
+import theme from "./config/theme";
+import AdminDashBord from "./pages/AdminDashBord/AdminDashBord";
+import AdminLogin from "./pages/AdminLogin/AdminLogin";
+import AdminOtp from "./pages/AdminOtp/AdminOtp";
+import { useSelector } from "react-redux";
 function App() {
-  const theme = extendTheme({
-    styles: {
-      global: () => ({
-        body: {
-          bg: "",
-          color: "white"
-        },
-      }),
-    },
-  });
+  const user = useSelector((state) => state.auth.user);
+  // const theme = extendTheme({
+  //   styles: {
+  //     global: () => ({
+  //       body: {
+  //         bg: "black",
+  //         color: "white"
+  //       },
+  //     }),
+  //   },
+  // });
   const { Loading } = useLoadingWithrefresh();
   return Loading ? (
-    <Loader message={'Loading please wait . . .'}/>
+    <Loader message={"Loading please wait . . ."} />
   ) : (
     <ChakraProvider theme={theme}>
-    <BrowserRouter>
-      {/* <Navigation /> */}
-      <SideDrawer/>
-      <Routes>
-        <Route element={<GuestRoutes />}>
-          <Route element={<Authenticate />} path="/authenticate" />
-          <Route path="/" exact element={<Home />} />
-        </Route>
-        <Route element={<SemiProtected />}>
-          <Route element={<Activate />} path="/activate" />
-        </Route>
-        <Route element={<ProtectedRoutes />}>
-          <Route element={<Rooms />} path="/rooms" />
-          <Route element={<Room/>} path="/room/:id" />
-          <Route element={<CodeRoom/>} path="/code/:id" />
-          <Route element={<Chats/>} path="/chats" />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+      <BrowserRouter>
+        {user?.isUser ? <SideDrawer /> : <Navigation />}
+
+        <Routes>
+          <Route element={<GuestRoutes />}>
+            <Route element={<Authenticate />} path="/authenticate" />
+            <Route path="/" exact element={<Home />} />
+          </Route>
+          <Route element={<SemiProtected />}>
+            <Route element={<Activate />} path="/activate" />
+          </Route>
+          <Route element={<ProtectedRoutes />}>
+            <Route element={<Rooms />} path="/rooms" />
+            <Route element={<Room />} path="/room/:id" />
+            <Route element={<CodeRoom />} path="/code/:id" />
+            <Route element={<Chats />} path="/chats" />
+          </Route>
+          <Route element={<AdminLogin />} path="/admin" />
+          <Route element={<AdminOtp />} path="/verify" />
+          <Route element={<AdminDashBord />} path="/dashboard" />
+        </Routes>
+      </BrowserRouter>
     </ChakraProvider>
   );
 }

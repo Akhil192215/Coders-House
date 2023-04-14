@@ -5,6 +5,7 @@ import { Button } from "@chakra-ui/button";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import NotificationBadge from "react-notification-badge";
 // import ProfileModal from "./ProfileModal";
+import { RiHome4Line } from "react-icons/ri";
 import {
   Menu,
   MenuButton,
@@ -21,6 +22,7 @@ import {
   DrawerOverlay,
   Input,
   Spinner,
+  useColorMode,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,6 +36,7 @@ import UserListItem from "../UserListItem/UserListItem";
 import { setSelectedChat } from "../../../store/setChatSlice";
 import { setChat } from "../../../store/setChatSlice";
 import { Link } from "react-router-dom";
+import ThemeSwitcher from "../../ThemeSwitcher";
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
@@ -43,6 +46,7 @@ const SideDrawer = () => {
   const { chats } = useSelector((state) => state.setChat);
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { colorMode } = useColorMode()
   const handleSearch = async () => {
     if (!search) {
       return warn("Please enter somthing to search");
@@ -91,10 +95,7 @@ const SideDrawer = () => {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        bg="white"
-        // w="90%"
         p="5px 10px 5px 10px"
-        background="#1d1d1d"
         border="none"
         borderRadius="10px"
         margin="10px"
@@ -111,7 +112,9 @@ const SideDrawer = () => {
             </Text>
           </Button>
         </Tooltip>
-        <Text fontSize="2xl">Coders House</Text>
+        <Text color="#65fbd7" fontSize="2xl">
+         <img  src={colorMode==="dark" ? "/images/coders.jpg" : "/images/coders_white.jpg"}  alt="" />
+        </Text>
         <div>
           <Menu>
             <MenuButton p={1}>
@@ -121,11 +124,13 @@ const SideDrawer = () => {
               />
               <BellIcon fontSize="2xl" m={1} />
             </MenuButton>
-         { user &&  <Link to="/chats">
-              <Button background="#2b2a2a" _hover={{ bg: "rgb(65,65,65)" }}>
-                Go to chats
-              </Button>
-            </Link>}
+            {user && (
+              <Link to="/chats">
+                <Button background="#2b2a2a" _hover={{ bg: "rgb(65,65,65)" }}>
+                  Go to chats
+                </Button>
+              </Link>
+            )}
             <MenuList pl={2}>
               {/* {!notification.length && "No New Messages"}
               {notification.map((notif) => (
@@ -145,6 +150,7 @@ const SideDrawer = () => {
           </Menu>
           {isAuth && (
             <Menu>
+              <span>    <ThemeSwitcher /> Switch theme</span>
               <MenuButton
                 _hover={{ bg: "rgb(65,65,65)" }}
                 as={Button}

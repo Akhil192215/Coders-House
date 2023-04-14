@@ -135,6 +135,9 @@ const copyRoomId = ()=>{
         <Button onClick={handManualLeave} colorScheme="blue">
           Leave Room
         </Button>
+            < span className={styles.header} onClick={handManualLeave} colorScheme="blue">
+
+        </span>
         <Button  className={styles.copy} onClick={copyRoomId} colorScheme="green">
          CopyRoom ID
         </Button>
@@ -161,11 +164,12 @@ const copyRoomId = ()=>{
         </div>
         <div className={styles.pane}>
           <iframe
+          bg="#fff"
             srcDoc={srcDoc}
             title="output"
             sandbox="allow-scripts"
             width="100%"
-            height="100%"
+            height="200%"
           />
         </div>
       </div>

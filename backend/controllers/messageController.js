@@ -9,7 +9,7 @@ class messageController {
 
     try {
       const messages = await Message.find({ chat: req.params.chatId })
-        .populate("sender", "name pic email")
+        .populate("sender", "name avatar email")
         .populate("chat");
       res.json(messages);
     } catch (error) {
@@ -37,7 +37,7 @@ class messageController {
       message = await message.populate("chat");
       message = await UserModel.populate(message, {
         path: "chat.users",
-        select: "name pic email",
+        select: "name avatar",
       });
       await Chat.findByIdAndUpdate(req.body.chatId, { latestMessage: message });
 

@@ -177,6 +177,7 @@ export const useWEBRTC = (roomId, user) => {
         const allConnectedClients = JSON.parse(
           JSON.stringify(clientsRef.current)
         );
+        console.log(mute,clientIdx);
         if (clientIdx > -1) {
           allConnectedClients[clientIdx].muted = mute;
           setClients(allConnectedClients);
@@ -209,7 +210,7 @@ export const useWEBRTC = (roomId, user) => {
   const handleMute = (isMute, userId) => {
     let settled = false;
 
-    if (userId === user.id) {
+    // if (userId === user.id) {
       let interval = setInterval(() => {
         if (localMediaStream.current) {
           localMediaStream.current.getTracks()[0].enabled = !isMute;
@@ -230,7 +231,7 @@ export const useWEBRTC = (roomId, user) => {
           clearInterval(interval);
         }
       }, 200);
-    }
+    // }
   };
 
   return {
