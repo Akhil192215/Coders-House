@@ -37,16 +37,16 @@ class ActivateController {
     try {
       const user = await userService.findUser({ _id: userId });
       if (!user) {
-        res.status(404).json({ message: "User is not found!" });
+      return  res.status(404).json({ message: "User is not found!" });
       }
       user.activated = true;
       user.name = name;
       user.avatar = `/storage/${imagePath}`;
       user.save();
-      res.json({ user: new UserDto(user), auth: true });
+     return res.json({ user: new UserDto(user), auth: true });
     } catch (err) {
       console.log(err);
-      res.status(500).json({ message: "Somthing went wrong" });
+      // res.status(500).json({ message: "Somthing went wrong" });
     }
   }
 }

@@ -1,12 +1,16 @@
 import { Box, Button, Flex, Switch } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { blockUnblock, getAllusers } from "../../http";
+import { blockUnblock, getAllusers, logOutAdmin } from "../../http";
 import styled from "styled-components";
 import DataTable from "react-data-table-component";
+import { setAuthAdmin } from "../../store/adminSlice";
+import { useDispatch } from "react-redux";
+import NewUsersChart from "../../Charts/NewUsersChart";
 const AdminDashBord = () => {
   const [users, setUsers] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [filteredData, setFilteredData] = useState();
+  const dispatch = useDispatch()
   const handleUser = async (event, userId) => {
     const data = await blockUnblock({
       blockStatus: event.target.checked,
@@ -34,20 +38,24 @@ const AdminDashBord = () => {
   useEffect(() => {
     setFilteredData(
       users.filter((item) =>
-        item.name.toLowerCase().includes(searchText.toLowerCase())
+      item.name?.toLowerCase().includes(searchText.toLowerCase())
+     
       )
     );
-  }, [searchText,users]);
+  }, [searchText, users]);
   const handleSearch = (event) => {
     setSearchText(event.target.value);
   };
-
-
+const logOutHandler = (async()=>{
+  const {data} =await logOutAdmin()
+  console.log(data);
+  dispatch(setAuthAdmin(data))
+})
   const columns = [
-    { name: "Name", selector: "name" },
+    { name: "Name", selector: (row) => row.name },
     {
       name: "Photo",
-      selector: "avatar",
+      selector: (row) => row.avatar,
       cell: (row) => (
         <img
           src={row.avatar}
@@ -61,7 +69,7 @@ const AdminDashBord = () => {
         />
       ),
     },
-    { name: "Phone", selector: "phone" },
+    { name: "Phone", selector: (row) => row.phone },
     {
       name: "Action",
       cell: (row) => (
@@ -92,7 +100,9 @@ const AdminDashBord = () => {
   return (
     <>
       <Flex flexDirection="column" alignItems="center" height="100vh">
+
         <h2>Admin dashBorard</h2>
+        <Button onClick={logOutHandler}>Logout</Button>
         <Box w="90%">
           <input
             type="text"
@@ -112,6 +122,7 @@ const AdminDashBord = () => {
             theme="dark"
           />
         </Box>
+     
       </Flex>
     </>
   );

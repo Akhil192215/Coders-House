@@ -3,7 +3,6 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setAuth } from "../store/authSlice";
 
-
 export function useLoadingWithrefresh() {
     const dispatch = useDispatch()
   const [Loading, setLoading] = useState(true);
@@ -25,6 +24,7 @@ export function useLoadingWithrefresh() {
     })();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
   return {Loading}
 }

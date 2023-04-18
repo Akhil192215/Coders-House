@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const otpService = require("../services/otp-service");
 const hashService = require("../services/hash-service");
 const userService = require("../services/user-service");
@@ -17,7 +18,7 @@ admin.initializeApp({
 
 class AuthController {
   async sendOtp(req, res) {
-    //Logic
+    // Logic
     let { phoneNumber } = req.body;
     console.log(phoneNumber, "...................");
     phoneNumber = `+91${phoneNumber}`;
@@ -26,12 +27,12 @@ class AuthController {
     }
     // generate OTP
     const otp = await otpService.generateOtp();
-    //hash OTP
-    const ttl = 1000 * 60 * 3; //2min
+    // hash OTP
+    const ttl = 1000 * 60 * 3; // 2min
     const expiry = Date.now() + ttl;
     const data = `${phoneNumber}.${otp}.${expiry}`;
     const hash = hashService.hashOtp(data);
-    //send OTP
+    // send OTP
 
     try {
       await otpService.sendBySms(phoneNumber, otp);
@@ -48,7 +49,7 @@ class AuthController {
   }
 
   async verifyOtp(req, res) {
-    //Logic
+    // Logic
     const { otp, hash, phone } = req.body;
 
     if (!otp || !hash || !phone) {
@@ -82,7 +83,7 @@ class AuthController {
         user = await userService.createUser({
           phone,
           blockStatus: false,
-          isUser: true,
+          isUser: "user",
         });
       }
     } catch (err) {
@@ -90,7 +91,7 @@ class AuthController {
       res.status(500).json({ message: "db error" });
     }
 
-    //Token
+    // Token
     const { accessToken, refreshToken } = tokenService.generateTokens({
       _id: user._id,
     });
@@ -106,18 +107,19 @@ class AuthController {
     const userDto = new UserDto(user);
     res.json({ user: userDto, auth: true });
   }
+
   async refresh(req, res) {
-    //Get refresh token from cookie
+    // Get refresh token from cookie
     const { refreshToken: refreshTokenFromCookie } = req.cookies;
     if (!refreshTokenFromCookie) {
       return res.status(401).json({ message: "invalid token" });
     }
-    //Check if token is valid
+    // Check if token is valid
     let userData;
 
     userData = await tokenService.verifyRefreshToken(refreshTokenFromCookie);
 
-    //check if token is in db
+    // check if token is in db
     try {
       const token = await tokenService.findRefreshToken(
         userData._id,
@@ -139,17 +141,17 @@ class AuthController {
     } catch (err) {
       res.status(500).json({ message: "Internal Error" });
     }
-    //Generate new tokens
+    // Generate new tokens
     const { refreshToken, accessToken } = tokenService.generateTokens({
       _id: userData._id,
     });
-    //Update token in db
+    // Update token in db
     try {
       await tokenService.updateRfreshToken(userData._id, refreshToken);
     } catch (error) {
       res.status(500).json({ message: "Internal Error" });
     }
-    //Put token in cookie
+    // Put token in cookie
     await tokenService.storeRefreshToken(refreshToken, user._id);
     res.cookie("refreshToken", refreshToken, {
       maxAge: 1000 * 60 * 60 * 24 * 30,
@@ -159,13 +161,14 @@ class AuthController {
       maxAge: 1000 * 60 * 60 * 24 * 30,
       httpOnly: true,
     });
-    //Send response
+    // Send response
     const userDto = new UserDto(user);
     res.json({ user: userDto, auth: true });
   }
+
   async logout(req, res) {
     const { refreshToken } = req.cookies;
-    //Remove refreshToken from db
+    // Remove refreshToken from db
     try {
       await tokenService.removeRefreshToken(refreshToken);
       res.clearCookie("accessToekn");

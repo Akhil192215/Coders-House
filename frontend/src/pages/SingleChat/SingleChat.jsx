@@ -40,7 +40,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     };
     init();
     socket.current.emit("setup", user);
-    // socket.current.on("connection", () => setSocketConnection(true));
   }, []);
   // console.log(notification, "-------------------------------------");
   const sendMessageHandler = async (e) => {
@@ -51,9 +50,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           content: newMessage,
           chatId: chat[0]._id,
         });
-        // console.log("data");
-        // console.log(data);
-        // console.log("data");
+        console.log(data);
         socket.current.emit("new message", data);
         setMessages((prevMessages) => [...prevMessages, data]);
       } catch (error) {
@@ -87,25 +84,22 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     selectedChatCompare = chat[0];
     
   }, [chat[0]]);
+  console.log(notification,'--------------------------------------------');
   // useEffect(() => {
   //   socket.current.emit("setup", user);
   //   socket.current.on("connection", () => setSocketConnection(true));
   // }, []);
   useEffect(() => {
     socket.current.on("message received", (newMessageRecived) => {
-      // console.log("newMessageRecived");
-      // console.log(newMessageRecived);
-      // console.log("newMessageRecived");
       if (
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessageRecived.chat._id
       ) {
-        // console.log(newMessageRecived);
         //give notification
-        // if (!notification.includes(newMessageRecived)) {
-        //   dispatch(setNotification(newMessageRecived));
-        //   setFetchAgain(!fetchAgain);
-        // }
+        if (!notification.includes(newMessageRecived)) {
+          dispatch(setNotification(newMessageRecived));
+          setFetchAgain(!fetchAgain);
+        }
       } else {
         setMessages((prevMessages) => [...prevMessages, newMessageRecived]);
       }

@@ -7,7 +7,15 @@ const userSchema = new Schema(
     phone: { type: String, required: true },
     name: { type: String, required: false },
     blockStatus: { type: Boolean, required: true },
-    isUser: { type: Boolean, required: true },
+    isUser: { type: String, required: true },
+    lastActivity: {
+      type: Date,
+      default: Date.now,
+    },
+    lastActivityUpdate: {
+      type: Date,
+      default: Date.now,
+    },
     avatar: {
       type: String,
       required: false,

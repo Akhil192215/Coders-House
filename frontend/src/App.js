@@ -20,25 +20,23 @@ import AdminDashBord from "./pages/AdminDashBord/AdminDashBord";
 import AdminLogin from "./pages/AdminLogin/AdminLogin";
 import AdminOtp from "./pages/AdminOtp/AdminOtp";
 import { useSelector } from "react-redux";
+import AdminRoutes from "./pages/AdminRoutes/AdminRoutes";
+import NewUsersChart from "./Charts/NewUsersChart"; 
 function App() {
+  const  admin = useSelector((state) => state?.adminAuth?.admin);
+  console.log("admin");
+  console.log(admin);
+  console.log("admin");
   const user = useSelector((state) => state.auth.user);
-  // const theme = extendTheme({
-  //   styles: {
-  //     global: () => ({
-  //       body: {
-  //         bg: "black",
-  //         color: "white"
-  //       },
-  //     }),
-  //   },
-  // });
+
   const { Loading } = useLoadingWithrefresh();
   return Loading ? (
     <Loader message={"Loading please wait . . ."} />
   ) : (
     <ChakraProvider theme={theme}>
       <BrowserRouter>
-        {user?.isUser ? <SideDrawer /> : <Navigation />}
+      {user?.isUser === "user" ? <SideDrawer /> : admin?.isUser === "admin" ? <Navigation /> : ""}
+
 
         <Routes>
           <Route element={<GuestRoutes />}>
@@ -54,9 +52,11 @@ function App() {
             <Route element={<CodeRoom />} path="/code/:id" />
             <Route element={<Chats />} path="/chats" />
           </Route>
-          <Route element={<AdminLogin />} path="/admin" />
-          <Route element={<AdminOtp />} path="/verify" />
-          <Route element={<AdminDashBord />} path="/dashboard" />
+          <Route element={<AdminRoutes />} >
+          {/* <Route element={<AdminOtp />} path="/verify" /> */}
+          <Route element={<NewUsersChart />} path="/dashboard" />
+          </Route>
+          <Route  element={<AdminLogin/>} path="/login/admin" />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>

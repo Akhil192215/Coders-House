@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const Chat = require("../models/chat-modal");
 const UserModel = require("../models/user-model");
 class ChatController {
@@ -15,15 +16,16 @@ class ChatController {
     res.send(users);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async accessChat(req, res) {
     const {userId}  = req.body;
     if (!userId) {
-      console.log("UserId param not sent with request");
       return res.sendStatus(400);
     }
-    var isChat = await Chat.find({
+    let isChat = await Chat.find({
       isGroupChat: false,
       $and: [
+        // eslint-disable-next-line no-underscore-dangle
         { users: { $elemMatch: { $eq: req.user._id } } },
         { users: { $elemMatch: { $eq: userId } } },
       ],
@@ -38,9 +40,10 @@ class ChatController {
     if (isChat.length > 0) {
       res.send(isChat[0]);
     } else {
-      var chatData = {
+      let chatData = {
         chatName: "sender",
         isGroupChat: false,
+        // eslint-disable-next-line no-underscore-dangle
         users: [req.user._id, userId],
       };
       try {
@@ -130,6 +133,7 @@ class ChatController {
       res.json(updatedChat);
     }
   }
+  // eslint-disable-next-line lines-between-class-members
   async addToGroup(req, res) {
     console.log(req.body);
     const { chatId, userId } = req.body;

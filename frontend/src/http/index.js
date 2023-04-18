@@ -28,6 +28,11 @@ export const fetchAllMessages = (chatId) => api.get(`/api/message/${chatId}`);
 export const adminLogin = (data) => api.post("/api/admin-login", data);
 export const getAllusers = () => api.get("/api/allUsers");
 export const blockUnblock = (data) => api.post("/api/blockUnblock", data);
+export const logOutAdmin = () => api.post("/api/logoutAdmin");
+export const getUserData = () => api.get("/api/newusers");
+export const getTotalNumberOfUsers = () => api.get("/api/totalusers");
+export const getTotalNumberOfAudio = () => api.get("/api/totalAudio");
+export const getTotalNumberOfCoding = () => api.get("/api/totalCoding");
 
 //Interceptors
 

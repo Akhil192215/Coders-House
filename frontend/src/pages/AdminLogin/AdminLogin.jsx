@@ -13,6 +13,7 @@ import { OTPsend, warn } from "../../components/shared/Alert/Alert";
 import { Flex } from "@chakra-ui/react";
 import { adminLogin, sendOtp } from "../../http";
 import { useNavigate } from "react-router-dom";
+import { setAuthAdmin } from "../../store/adminSlice";
 const emailRegex = /^\S+@\S+\.\S+$/;
 // var pattern = new RegExp(/\d\d\d\d\d\d\d\d\d\d$/);
 const AdminLogin = () => {
@@ -28,6 +29,7 @@ const AdminLogin = () => {
         const data = await adminLogin({ email, password });
         if (data.data.message === "verified") {
           nav("/dashboard");
+          dispatch(setAuthAdmin(data.data));
         }
       } catch (error) {
         warn("invalid credentials");

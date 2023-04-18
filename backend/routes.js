@@ -17,22 +17,31 @@ router.get("/api/rooms",authMiddleware,roomController.index)
 
 // search
 router.route('/api/chat/search').get(authMiddleware,chatController.searchUser)
-//chat
+// chat
 router.route('/api/chat').post(authMiddleware,chatController.accessChat).get(authMiddleware,chatController.fetchChat)
-//Group Routes  
+// Group Routes  
 router.route('/api/group').post(authMiddleware,chatController.createGroupChat)
 router.route('/api/chat/rename').post(authMiddleware,chatController.rename)
 router.route('/api/chat/addtogroup').post(authMiddleware,chatController.addToGroup)
 router.route('/api/chat/groupremove').post(authMiddleware,chatController.removeFromGroup)
 
-//message 
+// message 
 router.route('/api/message').post(authMiddleware,messageController.sendMessage)
 router.route('/api/message/:chatId').get(authMiddleware,messageController.allMessages)
 
-//Admin
+// Admin
 router.post('/api/admin-login',adminDashboard.adminLogin)
 router.get("/api/allUsers",adminDashboard.getAllUsers)
 router.post("/api/blockUnblock",adminDashboard.blockUnblockuser)
+router.post("/api/logoutAdmin",adminDashboard.logout)
+router.get("/api/totalusers",adminDashboard.totalUsers)
+router.get("/api/totalAudio",adminDashboard.totalAudioRooms)
+router.get("/api/totalCoding",adminDashboard.totalCodingRooms)
+router.get("/api/newusers",adminDashboard.newUsers)
+router.get("/api/admin-refresh",adminDashboard.adminRefresh)
+
+// chart
+
 
 
 module.exports = router;

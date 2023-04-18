@@ -1,21 +1,21 @@
 require("dotenv").config();
 const express = require("express");
-const router = require("./routes");
 const app = express();
-
 const server = require("http").createServer(app);
-
-const dbConnect = require("./database");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const ACTIONS = require("./actions");
-const liveChatService = require("./services/liveChat-service");
 const io = require("socket.io")(server, {
   cors: {
     origin: process.env.FRONT_URL,
     methods: ["GET", "POST", "PUT"],
   },
 });
+const router = require("./routes");
+
+
+const dbConnect = require("./database");
+const ACTIONS = require("./actions");
+// const liveChatService = require("./services/liveChat-service");
 // const server = require("http").createServer(app);
 // const io = require("socket.io")(server, {
 //   cors: {
@@ -132,27 +132,16 @@ io.on("connection", (socket) => {
 
   socket.on("disconnecting", leaveRoom);
 
-  //chat
+  // chat
 
-  socket.on("chat", (payload) => {
-    // try {
-    //   liveChatService.saveChat(payload)
-    // } catch (error) {
-
-    // }
-    //  liveChatService.getChatData().then((data)=>{
-
-    io.emit("chat", payload);
-    //   })
-  });
 
   
-  //Code
+  // Code
   socket.on('code change', (data) => {
     io.emit('code change', data);
   });
 });
-//CHAT
+// CHAT
 io.on("connection", (socket) => {
 socket.on("setup", (userData) => {
   socket.join(userData.id);
@@ -166,7 +155,7 @@ socket.on("join chat", (room) => {
 socket.on("typing", (room) => socket.in(room).emit("typing"));
 socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
 socket.on("new message", (newMessageRecived) => {
-  let chat = newMessageRecived.chat;
+  const {chat} = newMessageRecived;
   console.log(newMessageRecived);
   if (!chat.users) return console.log("chat.users is not defined");
   chat.users.forEach((user) => {
