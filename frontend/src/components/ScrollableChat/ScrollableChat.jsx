@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import ScrollableFeed from "react-scrollable-feed";
 import { isLastMessage, isSameSender, isSameSenderMargin, isSameUser } from '../../config/ChatLogics';
 const ScrollableChat = ({messages}) => {
-    // console.log(messages,'rrr')
+  
     const { user } = useSelector((state) => state.auth);
   return (
     <ScrollableFeed>

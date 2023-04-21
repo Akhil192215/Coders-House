@@ -57,7 +57,6 @@ const SideDrawer = () => {
       setTimeout(() => {
         setLoading(false);
       }, 2000);
-      console.log(data);
       setSearchResult(data);
     } catch (error) {
       console.log(error);
@@ -83,7 +82,6 @@ const SideDrawer = () => {
   const logoutHandle = async () => {
     try {
       const { data } = await logout();
-      console.log(data);
       dispatch(setAuth(data));
     } catch (error) {
       console.log(error);
@@ -122,7 +120,7 @@ const SideDrawer = () => {
               // count={notification.length}
               // effect={Effect.SCALE}
               />
-              <BellIcon fontSize="2xl" m={1} />
+              {/* <BellIcon fontSize="2xl" m={1} /> */}
             </MenuButton>
             {user && (
               <Link to="/chats">

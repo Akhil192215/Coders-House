@@ -38,7 +38,6 @@ const GroupChatModal = ({ children }) => {
     try {
       setLoadintg(true);
       const { data } = await searchUsers(search);
-      console.log(data);
       setLoadintg(false);
       setSearchResult(data);
     } catch (error) {
@@ -48,7 +47,6 @@ const GroupChatModal = ({ children }) => {
     }
   };
   const handleGroup = (userToAdd) => {
-    console.log(selectedUsers);
     if (selectedUsers.includes(userToAdd)) {
       return warn("user alredy added");
     }
@@ -62,7 +60,7 @@ const GroupChatModal = ({ children }) => {
       name: groupChatName,
       users: selectedUsers,
     });
-    console.log(data);
+
     dispatch(setChat([data, ...chats]));
     onClose();
     warn("group created successfully");

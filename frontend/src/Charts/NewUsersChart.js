@@ -36,7 +36,6 @@ function NewUsersChart({ timePeriod }) {
     async function fetchUserData() {
       try {
         let { data } = await getUserData();
-        console.log(data.data);
         setNewUsers(data.data);
       } catch (error) {
         console.log(error);
@@ -48,7 +47,6 @@ function NewUsersChart({ timePeriod }) {
     async function fetchCoding() {
       try {
         let { data } = await getTotalNumberOfCoding();
-        console.log(data.data);
         setTotalCoding(data.count);
       } catch (error) {
         console.log(error);
@@ -60,7 +58,6 @@ function NewUsersChart({ timePeriod }) {
     async function fetchAudioData() {
       try {
         let { data } = await getTotalNumberOfAudio();
-        console.log(data.data);
         setTotalAudio(data.count);
       } catch (error) {
         console.log(error);
@@ -209,7 +206,7 @@ function NewUsersChart({ timePeriod }) {
         </Box>
       </Box>
 
-      <Box width="90%"  justifyContent="center" alignItems="center">
+      <Box width="90%" justifyContent="center" alignItems="center">
         <Tabs variant="soft-rounded" colorScheme="green">
           <TabList>
             <Box display="flex" flexDirection="column">
@@ -227,17 +224,17 @@ function NewUsersChart({ timePeriod }) {
           <TabPanels>
             <TabPanel>
               <Box display="flex" alignItems="center" justifyContent="center">
-              <Box width="70%">
-                <canvas ref={chartRef} />
-              </Box>
+                <Box width="70%">
+                  <canvas ref={chartRef} />
+                </Box>
               </Box>
             </TabPanel>
             <TabPanel>
-            <Box display="flex" alignItems="center" justifyContent="center">
-              <Box width="100%">
-                {" "}
-                <AdminDashBord />
-              </Box>
+              <Box display="flex" alignItems="center" justifyContent="center">
+                <Box width="100%">
+                  {" "}
+                  <AdminDashBord />
+                </Box>
               </Box>
             </TabPanel>
           </TabPanels>

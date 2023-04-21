@@ -1,3 +1,5 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable lines-between-class-members */
 const RoomDto = require("../dtos/room-dto");
 const roomService = require("../services/roomService");
 
@@ -13,10 +15,7 @@ class roomController {
         roomType,
         ownerId: req.user._id,
       });
-      console.log(
-        room,
-        "////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////"
-      );
+   
       return res.json(new RoomDto(room));
     } catch (error) {}
   }

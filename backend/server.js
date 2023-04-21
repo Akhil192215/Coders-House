@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 require("dotenv").config();
 const express = require("express");
 const app = express();
@@ -40,7 +41,6 @@ app.use(cors(corsOption));
 const socketUserMap = {};
 
 io.on("connection", (socket) => {
-  // console.log('New connection', socket.id);
   socket.on(ACTIONS.JOIN, ({ roomId, user }) => {
     socketUserMap[socket.id] = user;
     const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
@@ -84,7 +84,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on(ACTIONS.UNMUTE, ({ roomId, userId }) => {
-    // console.log(userId);
     const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
     console.log(clients);
     clients.forEach((clientId) => {
@@ -99,7 +98,6 @@ io.on("connection", (socket) => {
     const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
     clients.forEach((clientId) => {
       if (clientId !== socket.id) {
-        // console.log(userId);
         io.to(clientId).emit(ACTIONS.MUTE_INFO, {
           userId,
           isMute,
@@ -146,11 +144,9 @@ io.on("connection", (socket) => {
 socket.on("setup", (userData) => {
   socket.join(userData.id);
   socket.emit("connected");
-  console.log("setup",userData.id);
 });
 socket.on("join chat", (room) => {
   socket.join(room);
-  console.log("join chat",room);
 });
 socket.on("typing", (room) => socket.in(room).emit("typing"));
 socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
@@ -158,14 +154,12 @@ socket.on("new message", (newMessageRecived) => {
   const {chat} = newMessageRecived;
   console.log(newMessageRecived);
   if (!chat.users) return console.log("chat.users is not defined");
-  chat.users.forEach((user) => {
-    console.log(newMessageRecived.content);
+  chat.users.forEach((user) => {;
     if (user._id === newMessageRecived.sender._id) return;
     socket.in(user._id).emit("message received", newMessageRecived);
   });
 });
 socket.off("setup", () => {
-  console.log("USER DISCONNECTED");
   socket.leave(userData.id);
 });
 });

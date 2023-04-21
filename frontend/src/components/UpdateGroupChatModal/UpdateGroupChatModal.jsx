@@ -95,7 +95,6 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
     try {
       setLoading(true);
       const { data } = await searchUsers(search);
-      console.log(data);
       setLoading(false);
       setSearchResult(data);
     } catch (error) {

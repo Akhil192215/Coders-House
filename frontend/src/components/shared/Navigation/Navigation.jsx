@@ -14,7 +14,6 @@ const Navigation = () => {
   const dispatch = useDispatch();
   const logOutHandler = async () => {
     const { data } = await logOutAdmin();
-    console.log(data);
     dispatch(setAuth(data));
   };
   return (

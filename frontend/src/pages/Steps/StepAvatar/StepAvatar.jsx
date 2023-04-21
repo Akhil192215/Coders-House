@@ -22,22 +22,18 @@ const StepAvatar = ({ onNext }) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = function () {
-      // console.log(reader.result);
       setProfile(reader.result);
       dispatch(setAvatar(reader.result));
     };
   }
   async function submit() {
-   
     if (!avatar) {
-      console.log("hi there ");
       return warn("Please choose a profile picture");
-    }else{
+    } else {
       setLoading(true);
       try {
         const { data } = await activate({ name: name, avatar: avatar });
         dispatch(setAuth(data));
-        console.log(data);
       } catch (err) {
         console.log(err);
       } finally {

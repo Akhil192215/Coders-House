@@ -29,7 +29,6 @@ const AdminDashBord = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       const data = await getAllusers();
-      console.log(data.data);
       setUsers(data.data);
     };
     fetchUsers();
@@ -48,7 +47,6 @@ const AdminDashBord = () => {
   };
 const logOutHandler = (async()=>{
   const {data} =await logOutAdmin()
-  console.log(data);
   dispatch(setAuthAdmin(data))
 })
   const columns = [
@@ -101,8 +99,8 @@ const logOutHandler = (async()=>{
     <>
       <Flex flexDirection="column" alignItems="center" height="100vh">
 
-        <h2>Admin dashBorard</h2>
-        <Button onClick={logOutHandler}>Logout</Button>
+   
+        {/* <Button onClick={logOutHandler}>Logout</Button> */}
         <Box w="90%">
           <input
             type="text"

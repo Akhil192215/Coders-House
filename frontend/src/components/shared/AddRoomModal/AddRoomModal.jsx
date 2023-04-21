@@ -25,7 +25,6 @@ const AddRoomModal = ({ onClose }) => {
 
     try {
       const { data } = await create({ topic, roomType });
-      console.log(data);
       if (roomType === "open") return navigate(`/room/${data.id}`);
       navigate(`/code/${data.id}`);
     } catch (error) {
@@ -34,7 +33,6 @@ const AddRoomModal = ({ onClose }) => {
   };
   const joinRoom = async () => {
     if (!topic) return "";
-    console.log(topic);
     nav(`/code/${topic}`);
   };
   return (

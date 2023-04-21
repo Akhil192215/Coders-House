@@ -20,7 +20,6 @@ class AuthController {
   async sendOtp(req, res) {
     // Logic
     let { phoneNumber } = req.body;
-    console.log(phoneNumber, "...................");
     phoneNumber = `+91${phoneNumber}`;
     if (!phoneNumber) {
       res.status(400).json({ message: "phone number is required" });
@@ -35,7 +34,7 @@ class AuthController {
     // send OTP
 
     try {
-      await otpService.sendBySms(phoneNumber, otp);
+      // await otpService.sendBySms(phoneNumber, otp);
 
       res.json({
         hash: `${hash}.${expiry}`,
@@ -74,7 +73,6 @@ class AuthController {
 
     try {
       user = await userService.findUser({ phone });
-      console.log(user);
       if (user) {
         if (user.blockStatus) {
           return res.status(400).json({ message: "user is blocked" });

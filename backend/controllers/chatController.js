@@ -135,7 +135,6 @@ class ChatController {
   }
   // eslint-disable-next-line lines-between-class-members
   async addToGroup(req, res) {
-    console.log(req.body);
     const { chatId, userId } = req.body;
     const added = await Chat.findByIdAndUpdate(
       chatId,

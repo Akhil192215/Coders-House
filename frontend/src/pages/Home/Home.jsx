@@ -4,13 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../components/shared/Button/Button";
 
 function Home() {
-  // const signInLinkStyle = {
-  //   color: "#EA3C12",
-  //   fontWeight: "bold",
-  //   textDecoration: "none",
-  //   fontSize: "13px",
-  //   marginLeft: "10px",
-  // };
   const navigate = useNavigate();
   const startRegister = () => {
     navigate("/authenticate");

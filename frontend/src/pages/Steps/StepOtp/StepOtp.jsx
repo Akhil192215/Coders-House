@@ -22,8 +22,6 @@ const StepOtp = ({ navFuction }) => {
     }
     try {
       const { data } = await verifyOtp({ otp, phone, hash });
-      console.log(data);
-
       if (data.message === "OTP is invalid") {
         return warn("OTP is invalid");
       }
@@ -40,12 +38,9 @@ const StepOtp = ({ navFuction }) => {
     }
   };
 
-  console.log(phone);
-
   const resendOtp = async () => {
-    console.log("in here", phone);
     const { data } = await sendOtp({ phoneNumber: phone });
-    console.log(data);
+
   };
   return (
     <>
@@ -58,7 +53,7 @@ const StepOtp = ({ navFuction }) => {
             <Button onClick={submit} text={"Verify"} />
           </div>
           <br />
-          <p onClick={resendOtp}>resend otp?</p>
+          {/* <p onClick={resendOtp}>resend otp?</p> */}
           <p className={styles.bottomParagraph}>
             By entering your number, you’re agreeing to our Terms of Service and
             Privacy Policy. Thanks!

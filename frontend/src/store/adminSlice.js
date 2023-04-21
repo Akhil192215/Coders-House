@@ -13,9 +13,6 @@ export const adminSlice = createSlice({
       const admin = action.payload;
       state.admin = admin;
       if (admin.auth) {
-        console.log("admin.auth");
-        console.log(admin.auth);
-        console.log("admin.auth");
         state.isAuth = true;
       } else {
         state.isAuth = false;

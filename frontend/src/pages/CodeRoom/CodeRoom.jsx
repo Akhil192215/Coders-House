@@ -76,7 +76,6 @@ const CodeRoom = () => {
   const [newMessage, setNewMessage] = useState(false);
 
   const { clients, provideRef, handleMute } = useWEBRTC(roomId, user);
-  console.log(clients);
   const naviagate = useNavigate();
 
   const [isMuted, setMuted] = useState(true);
@@ -93,16 +92,7 @@ const CodeRoom = () => {
       setNewMessage(true);
     });
   });
-  console.log(chat);
-  // useEffect(() => {
-  //     const fetchRoom = async () => {
-  //         const { data } = await getRoom(roomId);
-  //         setRoom((prev) => data);
-  //     };
-
-  //     fetchRoom();
-  // }, [roomId]);
-
+  
   useEffect(() => {
     if (message) {
       setNewMessage(false);

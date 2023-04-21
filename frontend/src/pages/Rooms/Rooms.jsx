@@ -113,7 +113,7 @@ function Rooms() {
   const openModal = () => {
     setShowModal(true);
   };
-  // console.log(rooms);
+
   return (
     <>
       <Flex justifyContent="center" alignItems="center" height="100vh">

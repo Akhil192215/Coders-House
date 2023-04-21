@@ -53,15 +53,6 @@ const Room = () => {
       setNewMessage(true);
     });
   });
-  console.log(chat);
-  // useEffect(() => {
-  //     const fetchRoom = async () => {
-  //         const { data } = await getRoom(roomId);
-  //         setRoom((prev) => data);
-  //     };
-
-  //     fetchRoom();
-  // }, [roomId]);
 
   useEffect(() => {
     if (message) {
@@ -108,13 +99,13 @@ const Room = () => {
               <span>Leave quietly</span>
             </button>
 
-            <button
+            {/* <button
               onClick={() => setHide(false)}
               className={styles.actionBtn1}
             >
               <span>Show chat </span>
               <img src="/images/chat-bubble.png" alt="win-icon" />
-            </button>
+            </button> */}
             <div className={`${newMessage ? styles.newMessage : ""}`}></div>
           </div>
         </div>
@@ -160,14 +151,14 @@ const Room = () => {
                     placement="right"
                     closeOnBlur={false}
                   >
-                    <PopoverTrigger>
+                    {/* <PopoverTrigger>
                       <button
                         onClick={onToggle}
                         style={{ "margin-left": "80px", "margin-top": "7px" }}
                       >
                         <IoEllipsisVerticalOutline />
                       </button>
-                    </PopoverTrigger>
+                    </PopoverTrigger> */}
                     <PopoverContent>
                       <PopoverHeader fontWeight="semibold">
                         Options

@@ -16,13 +16,13 @@ const Phone = ({ onNext }) => {
   const dispatch = useDispatch();
   const [phoneNumber, setPhoneNumber] = useState("");
   async function submit() {
-    console.log(pattern.test(phoneNumber));
+ 
     if (!pattern.test(phoneNumber)) {
       return warn('Please provide a valid phone number');
     } else {
       const { data } = await sendOtp({ phoneNumber });
+      console.log(data);
       if (data) {
-        console.log(data);
         dispatch(setOtp({ phone: data.phoneNumber, hash: data.hash }));
         await OTPsend();
         setTimeout(() => {

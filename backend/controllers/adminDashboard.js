@@ -22,17 +22,13 @@ class AdminDashBoard {
   }
 
   async blockUnblockuser(req, res) {
-    console.log(req.body);
     const { blockStatus, userId } = req.body;
     const response = await updateBlockStatus({ blockStatus, userId });
-    console.log(response);
     res.json({ blockStatus: response.blockStatus, userId: response._id });
   }
 
   async adminLogin(req, res) {
     const { email, password } = req.body;
-    // console.log(email === admin.email, password === admin.password);
-
     let admin;
     admin = await findAndVerifyAdmin({ email, password });
 
@@ -65,7 +61,7 @@ class AdminDashBoard {
   async logout(req, res) {
     const { refreshTokenAdmin } = req.cookies;
     // Remove refreshToken from db
-    await adminServices.removeAdminRefreshToken(refreshTokenAdmin);
+    // await adminServices.removeAdminRefreshToken(refreshTokenAdmin);
     try {
       res.clearCookie("accessToeknAdmin");
       res.clearCookie("refreshTokenAdmin");

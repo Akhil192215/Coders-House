@@ -3,10 +3,8 @@ import Card from "../../../src/components/shared/Card/Card";
 import Button from "../../components/shared/Button/Button";
 import InputField from "../../components/shared/Input/InputField";
 import styles from "./AdminLogin.moudle.css";
-// import { sendOtp } from "../../../../http/index";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-// import { setOtp } from "../../../../store/authSlice";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { OTPsend, warn } from "../../components/shared/Alert/Alert";
@@ -15,7 +13,7 @@ import { adminLogin, sendOtp } from "../../http";
 import { useNavigate } from "react-router-dom";
 import { setAuthAdmin } from "../../store/adminSlice";
 const emailRegex = /^\S+@\S+\.\S+$/;
-// var pattern = new RegExp(/\d\d\d\d\d\d\d\d\d\d$/);
+
 const AdminLogin = () => {
   const nav = useNavigate();
   const dispatch = useDispatch();

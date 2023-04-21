@@ -24,9 +24,6 @@ import AdminRoutes from "./pages/AdminRoutes/AdminRoutes";
 import NewUsersChart from "./Charts/NewUsersChart"; 
 function App() {
   const  admin = useSelector((state) => state?.adminAuth?.admin);
-  console.log("admin");
-  console.log(admin);
-  console.log("admin");
   const user = useSelector((state) => state.auth.user);
 
   const { Loading } = useLoadingWithrefresh();

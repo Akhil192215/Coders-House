@@ -41,7 +41,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     init();
     socket.current.emit("setup", user);
   }, []);
-  // console.log(notification, "-------------------------------------");
+  
   const sendMessageHandler = async (e) => {
     if (e.key === "Enter" && newMessage) {
       try {
@@ -50,7 +50,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           content: newMessage,
           chatId: chat[0]._id,
         });
-        console.log(data);
+       
         socket.current.emit("new message", data);
         setMessages((prevMessages) => [...prevMessages, data]);
       } catch (error) {
@@ -84,11 +84,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     selectedChatCompare = chat[0];
     
   }, [chat[0]]);
-  console.log(notification,'--------------------------------------------');
-  // useEffect(() => {
-  //   socket.current.emit("setup", user);
-  //   socket.current.on("connection", () => setSocketConnection(true));
-  // }, []);
+ 
   useEffect(() => {
     socket.current.on("message received", (newMessageRecived) => {
       if (
