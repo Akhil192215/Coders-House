@@ -21,7 +21,7 @@ const userSchema = new Schema(
       required: false,
       get: (avatar) => {
         if (avatar) {
-          return `${"http://localhost:4000"}${avatar}`;
+          return `${"https://coders-house.live"}${avatar}`;
         }
         return avatar;
       },

@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable lines-between-class-members */
 class UserDto {
   id;
   phone;
