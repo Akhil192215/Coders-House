@@ -22,7 +22,8 @@
     "firebase": "^9.18.0",
     "framer-motion": "^10.6.1",
     "freeice": "^2.2.2",
-    "react": "^18.2.0",
+    "react": "^18.0.0 || ^18.9.0",
+
     "react-chartjs-2": "^5.2.0",
     "react-codemirror2": "^7.2.1",
     "react-data-table-component": "^7.5.3",

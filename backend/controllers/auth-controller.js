@@ -126,7 +126,7 @@ class AuthController {
         refreshTokenFromCookie
       );
       if (!token) {
-        res.status(401).json({ message: "invalid token" });
+       return res.status(401).json({ message: "invalid token" });
       }
     } catch (error) {
       res.status(500).json({ message: "Internal Error" });
