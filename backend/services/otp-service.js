@@ -4,8 +4,8 @@ const e = require("express");
 const smsSid = process.env.SMS_SID;
 const smsAuthToken = process.env.SMS_AUTH;
 const client = require("twilio")(
-  "AC46eff7fd9bb02eeb887104d7bae12e32",
-  "3002e05dde6e4f6c993d1bba100d9c47",
+  smsSid,
+  smsAuthToken,
   {
     lazyLoading: true,
   }
