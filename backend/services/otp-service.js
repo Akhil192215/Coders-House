@@ -4,8 +4,8 @@ const e = require("express");
 const smsSid = process.env.SMS_SID;
 const smsAuthToken = process.env.SMS_AUTH;
 const client = require("twilio")(
-  "AC416e4b7ea000062d9c0ae00186d7c505",
-  "ee525a25125b27a3ce3a72993b6ddfb5",
+  "AC46eff7fd9bb02eeb887104d7bae12e32",
+  "3002e05dde6e4f6c993d1bba100d9c47",
   {
     lazyLoading: true,
   }
@@ -23,7 +23,7 @@ class OtpService {
     client.messages
       .create({
         body: `Your OTP is: ${otp}`,
-        from: "+1 507 666 5610", // Your Twilio phone number
+        from: "+15077103858", // Your Twilio phone number
         to: toNumber,
       })
       .then((message) => console.log(message.sid))
